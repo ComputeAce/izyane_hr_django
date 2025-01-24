@@ -38,3 +38,9 @@ def user_profile(request):
 
 def user_settings(request):
     return render(request, 'base/user_settings.html')
+
+def view_employee(request):
+    return render(request, 'base/employee.html')
+
+def LeaveRequest(request):
+    return render(request, 'base/leave_request.html')

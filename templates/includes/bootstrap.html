@@ -95,34 +95,59 @@
         </ul>
     </div>
     <!-- /Header -->
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-inner slimscroll">
-            <div class="sidebar-contents">
-                <div id="sidebar-menu" class="sidebar-menu">
-                    <ul>
-                        <li class="active">
-                            <a href="index.html"><img src="{% static 'assets/img/home.svg' %}" alt="sidebar_img"> <span>Dashboard</span></a>
-                        </li>
-                        <li>
-                            <a href="employee.html"><img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img"><span> Employees</span></a>
-                        </li>
-                        <li>
-                            <a href="company.html"><img src="{% static 'assets/img/company.svg' %}" alt="sidebar_img"> <span> Company</span></a>
-                        </li>
-                        <li>
-                            <a href="calendar.html"><img src="{% static 'assets/img/calendar.svg' %}" alt="sidebar_img"> <span>Calendar</span></a>
-                        </li>
-                        <li>
-                            <a href="leave.html"><img src="{% static 'assets/img/leave.svg' %}" alt="sidebar_img"> <span>Leave</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+      <div class="sidebar-contents">
+        <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+            <li>
+              <a href="index.html"><img src="{% static 'assets/img/home.svg' %}" alt="sidebar_img"> <span>Dashboard</span></a>
+            </li>
+            <li class="submenu">
+              <a href="#"><img src="{% static 'assets/img/company.svg' %}" alt="sidebar_img"> <span>HR</span> <span class="menu-arrow"></span></a>
+              <!-- Drop Down for the Hr-->
+              <ul style="display: none;">
+                <li>
+                  <a href="{% url 'base:view_employee' %}" style="display: flex; align-items: center; color: #333; text-decoration: none;">
+                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
+                    <span> Employees</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'base:leave_request' %}" style="display: flex; align-items: center; color: #333; text-decoration: none;">
+                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
+                    <span>Leave Request</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="advance_request.html" style="display: flex; align-items: center; color: #333; text-decoration: none;">
+                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
+                    <span>Advance Request</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="disciplinary.html" style="display: flex; align-items: center; color: #333; text-decoration: none;">
+                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
+                    <span>Disciplinary</span>
+                  </a>
+                </li>
+              </ul>
+              <!--End Drop Down for the Hr-->
+            </li>
+            <li>
+              <a href="company.html"><img src="{% static 'assets/img/company.svg' %}" alt="sidebar_img"> <span> Company</span></a>
+            </li>
+            <li>
+              <a href="calendar.html"><img src="{% static 'assets/img/calendar.svg' %}" alt="sidebar_img"> <span>Calendar</span></a>
+            </li>
+            <!-- ...existing code... -->
+          </ul>
         </div>
+      </div>
     </div>
-    <!-- /Sidebar -->
+  </div>
+  <!-- /Sidebar -->
 
     {% block content %}
 
