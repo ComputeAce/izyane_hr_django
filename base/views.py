@@ -29,3 +29,12 @@ def login(request):
 
 def add_employee(request):
     return "Added"
+
+
+def user_profile(request):
+    
+    return render(request, 'base/profile.html')
+
+
+def user_settings(request):
+    return render(request, 'base/user_settings.html')
