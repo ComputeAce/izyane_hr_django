@@ -25,3 +25,7 @@ def login(request):
             return render(request, 'base/login.html')
 
     return render(request, 'base/login.html')
+
+
+def add_employee(request):
+    return "Added"
