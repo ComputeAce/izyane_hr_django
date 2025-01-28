@@ -2,3 +2,10 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Ignore SQLite database
+db.sqlite3
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
