@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def leave_request(request):
+    return render(request, 'base/leave_request.html')
+
+
+
