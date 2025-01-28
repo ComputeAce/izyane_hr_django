@@ -13,7 +13,16 @@
                         <h2 class="card-titles">Profile</h2>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="#">
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="POST" action="{% url 'base:user_profile' %}">
+                            {% csrf_token %}
                             <div class="row">
                                 <!-- Username -->
                                 <div class="col-md-6 form-group">
@@ -21,10 +30,12 @@
                                     <input 
                                         type="text" 
                                         id="username" 
+                                        name="username"
                                         class="form-control" 
                                         placeholder="Username" 
                                         value="{{ user.username }}" 
-                                        required 
+                                        required
+                                        readonly 
                                     />
                                 </div>
 
@@ -33,7 +44,8 @@
                                     <label for="first_name">First Name</label>
                                     <input 
                                         type="text" 
-                                        id="first_name" 
+                                        id="first_name"
+                                        name="first_name"
                                         class="form-control" 
                                         placeholder="First Name" 
                                         value="{{ user.first_name }}" 
@@ -49,6 +61,7 @@
                                     <input 
                                         type="text" 
                                         id="last_name" 
+                                        name="last_name"
                                         class="form-control" 
                                         placeholder="Last Name" 
                                         value="{{ user.last_name }}" 
@@ -62,6 +75,7 @@
                                     <input 
                                         type="email" 
                                         id="email" 
+                                        name="email"
                                         class="form-control" 
                                         placeholder="Email Address" 
                                         value="{{ user.email }}" 
@@ -76,10 +90,12 @@
                                     <label for="job_title">Job Title</label>
                                     <input 
                                         type="text" 
-                                        id="job_title" 
+                                        id="job_title"
+                                        name="job_title" 
                                         class="form-control" 
                                         placeholder="Job Title" 
-                                        value="" 
+                                        value=""
+                                        readonly 
                                     />
                                 </div>
 
@@ -91,14 +107,16 @@
                                         id="employment_status" 
                                         class="form-control" 
                                         placeholder="Permanent" 
-                                        value="" 
+                                        value=""
+                                        readonly
                                     />
                                 </div>
                             </div>
 
                             <!-- Update Profile Button -->
                             <div class="form-btn text-center">
-                                <button type="submit" class="btn btn-applys">Update Profile</button>
+                                <button type="submit" class="btn btn-success">Update Profile</button>
+                            
                             </div>
                         </form>
                     </div>
