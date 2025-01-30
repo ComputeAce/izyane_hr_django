@@ -13,13 +13,26 @@
                     <div class="card-header">
                         <h2 class="card-titles">Change Password</h2>
                         <p class="text-muted">Your password must be at least 8 characters long.</p>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
                     </div>
                     <div class="card-body">
-                        <form method="post" action="#">
+                        <form method="POST" action="{% url 'base:user_settings'  %}" >
+
+                            {% csrf_token %}
+                            
                             <div class="form-group">
                                 <label for="current_password">Current Password</label>
                                 <input 
                                     type="password" 
+                                    name = "current_password"
                                     id="current_password" 
                                     class="form-control" 
                                     placeholder="Enter Current Password" 
@@ -30,6 +43,7 @@
                                 <label for="new_password">New Password</label>
                                 <input 
                                     type="password" 
+                                    name = "new_password"
                                     id="new_password" 
                                     class="form-control" 
                                     placeholder="Enter New Password" 
@@ -40,6 +54,7 @@
                                 <label for="confirm_password">Repeat Password</label>
                                 <input 
                                     type="password" 
+                                    name = "confirm_password"
                                     id="confirm_password" 
                                     class="form-control" 
                                     placeholder="Repeat New Password" 
@@ -47,7 +62,8 @@
                                 />
                             </div>
                             <div class="form-btn">
-                                <button type="submit" class="btn btn-apply" style="font-size: 14px; padding: 10px 20px;">Change Password</button>
+                                <button type="submit" class="btn btn-success">Change Password</button>
+                               
                             </div>
                         </form>
                     </div>
@@ -91,7 +107,7 @@
                                         />
                                     </div>
                                     <div class="form-btn mt-3">
-                                        <button type="submit" class="btn btn-apply" style="font-size: 14px; padding: 10px 20px; ">Update Profile Picture</button>
+                                        <button type="submit" class="btn btn-success">Update Profile Picture</button>
                                     </div>
                                 </div>
                             </div>

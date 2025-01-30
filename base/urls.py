@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from .views import home, login, add_employee, user_profile, user_settings, view_employee, LeaveRequest
+from .views import home, login, add_employee, user_profile, user_settings, view_employee, logout_user
 
 app_name = "base"
 urlpatterns = [
@@ -13,7 +13,9 @@ urlpatterns = [
     path('user_profile/', user_profile, name='user_profile'),
     path('user_settings/', user_settings, name='user_settings'),
     path('employee/', view_employee, name='view_employee'),
-    path('leave_request/', LeaveRequest, name='leave_request'),
+    path('logout_user/', logout_user, name='logout_user'),
+    path('add_employee/', add_employee, name='add_employee'),
+    
 ]
 
 if settings.DEBUG: 

@@ -1,0 +1,128 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12">
+                <div class="breadcrumb-path mb-4">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Home</a></li>
+                        <li class="breadcrumb-item active">Employees</li>
+                    </ul>
+                    <h3>Create Employees</h3>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-titles">Basic Details <span>Organized and secure.</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'base:add_employee' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-6 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            Tpin, social security number id type , nrc or passport number
+
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    <h2 class="card-titles">Employment Details <span>Let everyone know the essentials so they're fully prepared.</span></h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <select name="employment_type" class="form-control" required>
+                                                    <option value="" disabled selected>Employment Type</option>
+                                                    <option value="onsite">Onsite</option>
+                                                    <option value="remote">Remote</option>
+                                                    <option value="part-time">Part-Time</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <select name="position" class="form-control" required>
+                                                    <option value="" disabled selected>Position</option>
+                                                    <option value="developer">Developer</option>
+                                                    <option value="marketing">Marketing</option>
+                                                    <option value="operations">Operations</option>
+                                                    <option value="sales">Sales</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <select name="employment_status" class="form-control" required>
+                                                    <option value="" disabled selected>Employment Status</option>
+                                                    <option value="permanent">Permanent</option>
+                                                    <option value="internship">Internship</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    <h2 class="card-titles">Salary Details <span>Stored securely, only visible to Super Admins, Payroll Admins, and themselves.</span></h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <select name="currency" class="form-control" required>
+                                                    <option value="" disabled selected>Currency</option>
+                                                    <option value="usd">USD ($)</option>
+                                                    <option value="kwacha">Kwacha (K)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label>Salary</label>
+                                                <input type="number" name="salary_amount" class="form-control" placeholder="Gross Pay" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="form-btn d-flex justify-content-center gap-2">
+                                        <button type="submit" class="btn btn-success btn-sm px-3 py-2">
+                                            <i data-feather="plus"></i> Add Employee
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

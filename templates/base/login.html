@@ -1,6 +1,25 @@
-{% extends 'includes/bootstrap.html' %}
 {% load static %}
-{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    
+    <title>Izyane HR</title>
+  </head>
+  <body>
+
 
 <div class="main-wrapper login-body">
     <div class="login-wrapper">
@@ -66,4 +85,17 @@
     </div>
 </div>
 
-{% endblock %}
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/feather.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
+  <script src="{% static 'assets/js/script.js' %}"></script>
+
+
+  </body>
+</html>

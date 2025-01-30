@@ -39,7 +39,6 @@
             </a>
         </div>
     
-        
         <!-- Mobile Toggle -->
         <a class="mobile_btn" id="mobile_btn">
             <i class="fas fa-bars"></i>
@@ -89,82 +88,71 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'base:user_profile' %}"><i data-feather="user" class="mr-1"></i> Profile</a>
                     <a class="dropdown-item" href="{% url 'base:user_settings' %}"><i data-feather="settings" class="mr-1"></i> Settings</a>
-                    <a class="dropdown-item" href="login.html"><i data-feather="log-out" class="mr-1"></i> Logout</a>
+                    <a class="dropdown-item" href="{% url 'base:logout_user' %}"><i data-feather="log-out" class="mr-1"></i> Logout</a>
                 </div>
             </li>
         </ul>
     </div>
     <!-- /Header -->
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-inner slimscroll">
-      <div class="sidebar-contents">
-        <div id="sidebar-menu" class="sidebar-menu">
-          <ul>
-            <li>
-              <a href="index.html"><img src="{% static 'assets/img/home.svg' %}" alt="sidebar_img"> <span>Dashboard</span></a>
-            </li>
-            <li class="submenu">
-              <a href="#"><img src="{% static 'assets/img/company.svg' %}" alt="sidebar_img"> <span>HR</span> <span class="menu-arrow"></span></a>
-              <!-- Drop Down for the Hr-->
-              <ul style="display: none;">
-                <li>
-                  <a href="{% url 'base:view_employee' %}" style="display: flex; align-items: center; color: #333; text-decoration: none;">
-                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
-                    <span> Employees</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{% url 'base:leave_request' %}" style="display: flex; align-items: center; color: #333; text-decoration: none;">
-                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
-                    <span>Leave Request</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="advance_request.html" style="display: flex; align-items: center; color: #333; text-decoration: none;">
-                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
-                    <span>Advance Request</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="disciplinary.html" style="display: flex; align-items: center; color: #333; text-decoration: none;">
-                    <img src="{% static 'assets/img/employee.svg' %}" alt="sidebar_img" style="margin-right: 10px;">
-                    <span>Disciplinary</span>
-                  </a>
-                </li>
-              </ul>
-              <!--End Drop Down for the Hr-->
-            </li>
-            <li>
-              <a href="company.html"><img src="{% static 'assets/img/company.svg' %}" alt="sidebar_img"> <span> Company</span></a>
-            </li>
-            <li>
-              <a href="calendar.html"><img src="{% static 'assets/img/calendar.svg' %}" alt="sidebar_img"> <span>Calendar</span></a>
-            </li>
-            <!-- ...existing code... -->
-          </ul>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div class="sidebar-contents">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="{% url 'base:home' %}">
+                                <img src="{% static 'assets/img/home.svg' %}" alt="sidebar_img">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        {% if request.user.profile.department == 'HR' %}
+                        <li>
+                            <a href="{% url 'admin_users:user_management' %}">
+                                <img src="{% static 'assets/img/calendar.svg' %}" alt="sidebar_img">
+                                <span>User Management</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if request.user.profile.department == 'IT' %}
+                        <li>
+                            <a href="{% url 'employees:salary_advc_form' %}">
+                                <img src="{% static 'assets/img/salary.svg' %}" alt="Salary Advance">
+                                <span>Salary Advance</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'employees:leave_form' %}">
+                                <img src="{% static 'assets/img/company.svg' %}" alt="Leave">
+                                <span>Leave</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- /Sidebar -->
+    <!-- /Sidebar -->
 
+    <!-- Main Content -->
     {% block content %}
-
     {% endblock %}
-
     
-</div>
+  </div>
 
-<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
-<script src="{% static 'assets/js/popper.min.js' %}"></script>
-<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'assets/js/feather.min.js' %}"></script>
-<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
-<script src="{% static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
-<script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
+  <!-- Scripts -->
+  <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'assets/js/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/feather.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
   <script src="{% static 'assets/js/script.js' %}"></script>
-
 
   </body>
 </html>
