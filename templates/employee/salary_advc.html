@@ -84,7 +84,6 @@
                                         <th>Advance Date</th>
                                         <th>Repayment Date</th>
                                         <th>Days Left</th>
-                                        <th>Remaining Balance</th>
                                         <th>Notes</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -102,7 +101,7 @@
                                                 <label>Sean Black</label>
                                             </div>
                                         </td>
-                                        <td>${{ advc.amount }}</td>
+                                        <td>{{ advc.amount }}</td>
                                         <td>{{ advc.repayment_start_date|date:"d M Y" }}</td>
                                         <td>
                                             {% if advc.repayment_end_date %}
@@ -112,7 +111,7 @@
                                             {% endif %}
                                         </td>
                                         <td>{{ advc.repayment_months }} Months</td>
-                                        <td>${{ advc.amount }}</td>
+                                        
                                         <td>{{ advc.reason }}</td>
                                         <td><span class="badge badge-success">{{ advc.approval_status }}</span></td>
                                         <td><a href="#" class="text-danger">Delete <i data-feather="trash-2"></i></a></td>
