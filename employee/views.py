@@ -65,5 +65,5 @@ def salary_advc_request(request):
         )
         salary_advance.save()
 
-        messages.success(request, "Salary Advance Request submitted successfully.")
+        messages.success(request, "Salary Advance Request submitted successfully...")
     return render(request, 'employee/salary_advc.html')
