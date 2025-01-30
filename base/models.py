@@ -15,6 +15,38 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
     
 
+
+class Employee(models.Model):
+    EMPLOYMENT_TYPE_CHOICES = [
+        ('Full Time', 'Full Time'),
+        ('Part Time', 'Part Time'),
+        ('Contract', 'Contract'),
+        ('Internship', 'Internship'),
+    ]
+
+    EMPLOYMENT_STATUS_CHOICES = [
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    ]
+
+    POSITION_TYPE_CHOICES = [
+        ('Junior', 'Junior'),
+        ('Senior Develope', 'Senior'),
+        ('Lead', 'Lead'),
+        ('Manager', 'Manager'),
+        ('Director', 'Director'),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    employment_type = models.CharField(max_length=50, choices=EMPLOYMENT_TYPE_CHOICES, default='Full Time')
+    position = models.CharField(max_length=100)
+    employment_status = models.CharField(max_length=50, choices=EMPLOYMENT_STATUS_CHOICES, default='Active')
+    salary_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10, default='USD')
+
+    def __str__(self):
+        return f'{self.user.username} Employee'
+    
+
 class Leave(models.Model):
     LEAVE_TYPE_CHOICES = [
         ('Vacation', 'Vacation'),
