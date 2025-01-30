@@ -12,56 +12,19 @@ def home(request):
     return render(request, 'base/home.html')
 
 
-from django.contrib.auth import authenticate, login as auth_login
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Profile
-
 def login(request):
     if request.method == "POST":
-        user_username = request.POST.get('email')
-        user_password = request.POST.get('password')
-        user = authenticate(request, username=user_username, password=user_password)
-
-        if user is not None:
-            auth_login(request, user)
-
-            try:
-                user_profile = Profile.objects.get(user=user)
-
-                if user_profile.department == "IT":
-
-                    return redirect("employees:employee_dashboard")
-                
-                """ 
-                if user_profile.position == "Manager":
-
-                    return redirect("admin_users:dashboard")
-                
-               
-
-                elif user_profile.position == "Developer":
-
-                    return redirect("developer:dashboard")
-                
-                elif user_profile.position == "HR":
-                    return redirect("hr:dashboard")
-                
-                elif user_profile.position == "Sales":
-                    return redirect("sales:dashboard")
-                
-                elif user_profile.position == "Admin":
-                    return redirect("admin:dashboard")
-                else:
-                    return redirect("base:home") 
-                """
-            except Profile.DoesNotExist:
-                messages.error(request, "Profile not found for this user.")
-                return render(request, "base/login.html")
-
-        else:
-            messages.warning(request, "Invalid credentials")
-            return render(request, "base/login.html")
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(email=email)
+            if user.check_password(password):
+                auth_login(request, user)
+                return redirect("base:home")
+            else:
+                messages.error(request, "Invalid credentials")
+        except User.DoesNotExist:
+            messages.error(request, "Invalid credentials")
 
     return render(request, "base/login.html")
 
