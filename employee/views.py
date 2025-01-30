@@ -13,16 +13,17 @@ def employee_dashboard(request):
 
 
 def leave_form(request):
-    user = request.user
-    get_user_leaves = Leave.objects.filter(user=user)
+    user = request.user.username
+    print(user)
+    get_user_leaves = Leave.objects.filter(user__username=user)
     context = {
         'get_user_leaves': get_user_leaves
-    }
+    }   
     return render(request, 'employee/apply_leave.html', context)
 
 def salary_advc_form(request):
-    user = request.user
-    get_user_salary_advc = SalaryAdvance.objects.filter(user=user)
+    user = request.user.username
+    get_user_salary_advc = SalaryAdvance.objects.filter(user__username=user)
     print(get_user_salary_advc)
     context = { 
 
