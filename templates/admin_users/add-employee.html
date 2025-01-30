@@ -13,6 +13,7 @@
                     </ul>
                     <h3>Create Employees</h3>
                 </div>
+         
             </div>
 
             <div class="col-xl-12 col-sm-12 col-12">
@@ -21,7 +22,7 @@
                         <h2 class="card-titles">Basic Details <span>Organized and secure.</span></h2>
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'base:add_employee' %}" method="POST">
+                        <form action="{% url 'admin_users:create_employee' %}" method="POST">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-xl-6 col-sm-12 col-12">
@@ -79,6 +80,17 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="col-xl-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <select name="department" class="form-control" required>
+                                                    <option value="" disabled selected>Department</option>
+                                                    <option value="hr">HR</option>
+                                                    <option value="it">IT</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

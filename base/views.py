@@ -7,6 +7,7 @@ from django.core.validators import validate_email
 from django.contrib import messages
 
 
+
 @login_required(login_url='/login')
 def home(request):
     return render(request, 'base/home.html')
@@ -16,6 +17,10 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a029b69e63bf75a851ce13f493c05b9e693f308
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
@@ -27,23 +32,7 @@ def login(request):
             messages.error(request, "Invalid credentials")
 
     return render(request, "base/login.html")
-
-
-def add_employee(request):
-    if request.method == 'POST':
-
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        employment_type = request.POST.get('employment_type')
-        position = request.POST.get('position')
-        employment_status = request.POST.get('employment_status')
-        salary_amount = request.POST.get('salary_amount')
-        currency = request.POST.get('currency')
-        user = User.objects.create_user(username=email, email=email, password='password')
-        return HttpResponse("Employee added successfully!")
     
-    return HttpResponse("Invalid request!")
 
 @login_required
 def user_profile(request):
