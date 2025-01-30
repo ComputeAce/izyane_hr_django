@@ -1,0 +1,135 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row justify-content-center mt-n3">
+            <!-- Change Password Section -->
+            <div class="col-md-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h2 class="card-titles">Change Password</h2>
+                        <p class="text-muted">Your password must be at least 8 characters long.</p>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'base:user_settings'  %}" >
+
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <label for="current_password">Current Password</label>
+                                <input 
+                                    type="password" 
+                                    name = "current_password"
+                                    id="current_password" 
+                                    class="form-control" 
+                                    placeholder="Enter Current Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="new_password">New Password</label>
+                                <input 
+                                    type="password" 
+                                    name = "new_password"
+                                    id="new_password" 
+                                    class="form-control" 
+                                    placeholder="Enter New Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">Repeat Password</label>
+                                <input 
+                                    type="password" 
+                                    name = "confirm_password"
+                                    id="confirm_password" 
+                                    class="form-control" 
+                                    placeholder="Repeat New Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-btn">
+                                <button type="submit" class="btn btn-success">Change Password</button>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Profile Picture Section -->
+            <div class="col-md-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h2 class="card-titles">Update Profile Picture</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="#" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
+
+                                <!-- Profile Picture Preview -->
+                                <div class="col-md-8 text-center">
+                                    <img 
+                                        src="{% static 'images/default_profile.png' %}" 
+                                        alt="Profile Picture Preview" 
+                                        class="img-fluid rounded-circle mb-3" 
+                                        id="profilePreview" 
+                                        width="100"
+                                        height="100"
+                                    />
+                                </div>
+                                <!-- Upload Section -->
+                             
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="profile_picture">Upload New Profile Picture</label>
+                                        <input 
+                                            type="file" 
+                                            id="profile_picture" 
+                                            name="profile_picture" 
+                                            class="form-control-file" 
+                                            accept="image/*" 
+                                            onchange="previewImage(event)" 
+                                            required 
+                                        />
+                                    </div>
+                                    <div class="form-btn mt-3">
+                                        <button type="submit" class="btn btn-success">Update Profile Picture</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Image Preview Script -->
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('profilePreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+{% endblock %}

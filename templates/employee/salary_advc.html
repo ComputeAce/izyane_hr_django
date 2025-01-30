@@ -1,0 +1,130 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12 mb-4">
+                <div class="breadcrumb-path">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <img src="{% static 'assets/img/dash.png' %}" class="mr-2" alt="breadcrumb">Home
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Salary Advance</li>
+                    </ul>
+                    <h3>Salary Advance</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Apply Salary Advance</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'employees:salary_advc_request' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Amount <span class="mandatory">*</span></label>
+                                        <input name="amount" type="number" class="form-control" placeholder="Enter amount" required>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-xl-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Advance Date</label>
+                                        <input name="repayment_start_date" type="date" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Repayment Period (Months)</label>
+                                        <input name="repayment_months" type="number" class="form-control" placeholder="Enter number of months" required>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <label>Reason</label>
+                                        <textarea name="reason" rows="4" class="form-control" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                        </form>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Salary Advance Records</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Amount</th>
+                                        <th>Advance Date</th>
+                                        <th>Repayment Date</th>
+                                        <th>Days Left</th>
+                                        <th>Remaining Balance</th>
+                                        <th>Notes</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                
+                                {% for advc in get_user_salary_advc %}
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="table-img">
+                                                <a href="profile.html">
+                                                    <img src="{% static 'assets/img/profiles/avatar-13.jpg' %}" alt="profile" class="img-table">
+                                                </a>
+                                                <label>Sean Black</label>
+                                            </div>
+                                        </td>
+                                        <td>${{ advc.amount }}</td>
+                                        <td>{{ advc.repayment_start_date|date:"d M Y" }}</td>
+                                        <td>
+                                            {% if advc.repayment_end_date %}
+                                                {{ advc.repayment_end_date|date:"d M Y" }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ advc.repayment_months }} Months</td>
+                                        <td>${{ advc.amount }}</td>
+                                        <td>{{ advc.reason }}</td>
+                                        <td><span class="badge badge-success">{{ advc.approval_status }}</span></td>
+                                        <td><a href="#" class="text-danger">Delete <i data-feather="trash-2"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
