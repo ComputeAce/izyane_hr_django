@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib import messages
+from base.models import Profile
 
 
 
@@ -17,10 +18,6 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-<<<<<<< HEAD
-=======
-
->>>>>>> 3a029b69e63bf75a851ce13f493c05b9e693f308
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
@@ -41,6 +38,8 @@ def user_profile(request):
         get_first_name = request.POST.get('first_name')
         get_last_name = request.POST.get('last_name')
         get_email = request.POST.get('email')
+
+        
 
         print(get_username, get_first_name, get_last_name, get_email)
 
@@ -87,6 +86,8 @@ def user_settings(request):
         get_new_password = request.POST.get('current_password')
         get_confirm_password = request.POST.get('confirm_password')
 
+    
+
         username = request.user.username
         user =  authenticate(request, username=username, password=get_current_password)
         if user is not None:
@@ -106,6 +107,19 @@ def user_settings(request):
 
     return render(request, 'base/user_settings.html')
 
+def update_profile_img(request):
+    if request.method == 'POST' and 'profile_picture' in request.FILES:
+    
+        image = request.FILES['profile_picture'] 
+        user = request.user
+        get_profile = Profile.objects.get(user=user)
+        get_profile.image = image
+        get_profile.save()
+        messages.success(request, 'Your profile picture has been updated successfully!')
+        return redirect('base:user_profile')  
+    
+    messages.error(request, 'Failed to update profile picture. Please try again.')
+    return redirect('base:user_settings')
 
 
 def view_employee(request):

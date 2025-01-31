@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.models import Leave, SalaryAdvance
 from django.contrib import messages
 from datetime import timedelta, datetime
@@ -14,7 +14,7 @@ def employee_dashboard(request):
 
 def leave_form(request):
     user = request.user.username
-    print(user)
+
     get_user_leaves = Leave.objects.filter(user__username=user)
     context = {
         'get_user_leaves': get_user_leaves
@@ -23,6 +23,7 @@ def leave_form(request):
 
 def salary_advc_form(request):
     user = request.user.username
+    print(user)
     get_user_salary_advc = SalaryAdvance.objects.filter(user__username=user)
     print(get_user_salary_advc)
     context = { 
@@ -42,8 +43,9 @@ def leave_request(request):
         leave = Leave(user=request.user, start_date=start_date, end_date=end_date, reason=reason, leave_type=leave_type)
         leave.save()
 
-    messages.info(request, 'Leave request submitted successfully.')
-    return render(request, 'employee/apply_leave.html')
+        messages.info(request, 'Leave request submitted successfully.')
+        return redirect('employees:leave_form')
+    
 
 
 def salary_advc_request(request):
@@ -66,4 +68,4 @@ def salary_advc_request(request):
         salary_advance.save()
 
         messages.success(request, "Salary Advance Request submitted successfully...")
-    return render(request, 'employee/salary_advc.html')
+        return redirect('employees:salary_advc_form')

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from PIL import Image
+import random
+import os
 class Profile(models.Model):
     DEPARTMENT_CHOICES = [
         ('IT', 'IT'),
@@ -8,12 +10,38 @@ class Profile(models.Model):
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile_pics')
+    image = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
-    
+
+        
+    def save(self, *args, **kwargs):
+        if self.image:
+            super().save(*args, **kwargs)
+
+            img = Image.open(self.image.path)
+            try:
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
+                    img.thumbnail(output_size)
+                    img.save(self.image.path)
+            finally:
+                img.close()
+
+            random_number = random.randint(10000000, 99999999)
+            base_path, ext = os.path.splitext(self.image.name)
+            new_filename = f'{random_number}{ext}'
+            new_path = os.path.join('profile_pics', new_filename)
+        
+            old_full_path = self.image.path
+            new_full_path = os.path.join(os.path.dirname(old_full_path), new_filename)
+            
+            os.rename(old_full_path, new_full_path)
+            self.image.name = new_path
+            super().save(*args, **kwargs)
+        
 
 
 class Employee(models.Model):
@@ -63,11 +91,11 @@ class Leave(models.Model):
     end_date = models.DateField()
     reason = models.TextField()
     leave_type = models.CharField(max_length=50, choices=LEAVE_TYPE_CHOICES, default='Others')
-    hr_approved = models.BooleanField(default=False)
-    director_approved = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f'{self.user.username} Leave'
+  
  
 class SalaryAdvance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

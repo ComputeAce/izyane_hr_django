@@ -21,6 +21,14 @@
             <div class="col-xl-12 col-sm-12 col-12 mb-4">
                 <div class="head-link-set">
                     <ul>
+                        <li><a class="active" href="{% url 'admin_users:leave_request' %}">Leave Requests</a></li>
+                    </ul>
+
+                    <ul>
+                        <li><a class="active" href="{% url 'admin_users:salary_advance_request' %}">Salary Advance Requests</a></li>
+                    </ul>
+
+                    <ul>
                         <li><a class="active" href="#">All</a></li>
                     </ul>
                     <a class="btn btn-success" href="{% url 'admin_users:add_employee' %}">
@@ -64,24 +72,15 @@
                                 {% for user in get_user_obj %}
                                 <tr>
                                     <td>
-                                        {% if user.profile.image %}
-
-                                        <div class="table-img">
-                                            <a href="profile.html">
-                                                <img src="{{ user.profile.image_url }}" alt="profile" class="img-table" />
-                                                <label>{{ user.first_name }} {{ user.last_name}}</label>
-                                            </a>
-                                        </div>
-                                        
-                                        {% else %}
-
-                                        <div class="table-img">
-                                            <a href="profile.html">
-                                                <img src="{% static 'assets/img/profile.jpg' %}" alt="profile" class="img-table" />
-                                                <label>{{ user.first_name }} {{ user.last_name}}</label>
-                                            </a>
-                                        </div>
-                                        {% endif %}
+                                        <span class="user-img">
+                                            {% if user.profile.image %}
+                                                <img src="{{ user.profile.image.url }}" alt="User Image">
+                                                <span class="status online"></span>
+                                            {% else %}
+                                                <img src="{% static 'assets/img/blank-profile.jpg' %}" alt="Default Profile">
+                                                <span class="status online"></span>
+                                            {% endif %}
+                                        </span>
                                         
                                     </td>
                                     <td>

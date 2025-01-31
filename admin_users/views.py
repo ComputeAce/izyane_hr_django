@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .utils import generate_password
 from django.contrib import messages
-from base.models import Employee, Profile
+from django.db import IntegrityError
+from base.models import Employee, Profile, Leave
 
 def user_management(request):
     get_user_count = User.objects.all().count()
 
-    get_user_obj = User.objects.all()
+
+    get_user_obj = User.objects.select_related('profile').all()
     
     context = {        
         'get_user_count': get_user_count,
@@ -55,3 +57,18 @@ def create_employee(request):
 
         messages.success(request, "Employee added successfully!")
         return redirect('admin_users:user_management')
+
+
+
+def leave_request(request):
+    leaves = Leave.objects.all()  
+    context = {
+        'leaves': leaves,
+    }
+
+
+    return render(request, 'admin_users/leave_request.html', context)
+
+
+def salary_advance_request(request):
+    return render(request, 'admin_users/salary_advance_request.html')

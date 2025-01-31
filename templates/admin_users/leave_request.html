@@ -1,0 +1,125 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12 mb-4">
+                <div class="breadcrumb-path">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <img src="{% static 'assets/img/dash.png' %}" class="mr-2" alt="breadcrumb">Home
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Leave</li>
+                    </ul>
+                    <h3>Leave</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 col-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-xl-12 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Leave Details</h2>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table no-footer">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee</th>
+                                                    <th>Leave Type</th>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th>Note</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for leave in leaves %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="table-img">
+                                                            {% if leave.user.profile.image %}
+                                                                <a href="#">
+                                                                    <img src="{{ leave.user.profile.image.url }}" alt="profile" class="img-table">
+                                                                </a>
+                                                            {% else %}
+                                                                <a href="{% url 'user_profile' leave.user.username %}">
+                                                                    <img src="{% static 'assets/img/profiles/default-avatar.jpg' %}" alt="profile" class="img-table">
+                                                                </a>
+                                                            {% endif %}
+                                                            <label>{{ leave.user.get_full_name }}</label>
+                                                        </div>
+                                                    </td>
+                                                    <td><label>{{ leave.leave_type }}</label></td>
+                                                    <td><label>{{ leave.start_date }}</label></td>
+                                                    <td><label>{{ leave.end_date }}</label></td>
+                                                    <td><label>{{ leave.reason }}</label></td>
+                                                    <td><label>{{ leave.status }}</label></td>
+                                                    <td>
+                                                        <label>
+                                                            {% if leave.status == 0 %}
+                                                            <span>Action Taken</span>
+                                                            {% elif leave.status == 1 %}
+                                                            <span>Action Taken</span>
+                                                            {% else %}
+                                                            <a class="action_label4" data-toggle="modal" data-target="#approveRejectModal" data-leave-id="{{ leave.id }}">Approve / Reject</a>
+                                                            {% endif %}
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approve/Reject Modal -->
+        <div class="modal fade" id="approveRejectModal" tabindex="-1" aria-labelledby="approveRejectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="approveRejectModalLabel">Approve or Reject Leave</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="#">
+                            {% csrf_token %}
+                            <input type="hidden" name="leave_id" id="leave-id">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                                <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<script>
+    // JavaScript to set the leave ID for approval/rejection
+    $('#approveRejectModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); 
+        var leaveId = button.data('leave-id'); 
+        var modal = $(this);
+        modal.find('#leave-id').val(leaveId);
+    });
+</script>
