@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.models import User
 from .utils import generate_password
 from django.contrib import messages
 from django.db import IntegrityError
-from base.models import Employee, Profile, Leave
+from base.models import Employee, Profile, Leave, SalaryAdvance
 
 def user_management(request):
     get_user_count = User.objects.all().count()
@@ -54,7 +54,7 @@ def create_employee(request):
         add_user_to_department = Profile.objects.get(user=user)
         add_user_to_department.department = new_department
         add_user_to_department.save()
-
+    
         messages.success(request, "Employee added successfully!")
         return redirect('admin_users:user_management')
 
@@ -71,4 +71,42 @@ def leave_request(request):
 
 
 def salary_advance_request(request):
-    return render(request, 'admin_users/salary_advance_request.html')
+    salary_advc = SalaryAdvance.objects.all()
+
+    context = {
+        'salary_advc':salary_advc
+    }
+    return render(request, 'admin_users/salary_advance_request.html', context)
+
+
+def vett_salary_advc_request(request, id):
+    if request.method == 'POST':
+        get_action = request.POST.get("action")
+        salary_adv = get_object_or_404(SalaryAdvance, id=id)
+        salary_adv.approval_status = get_action
+        salary_adv.save()
+    else:
+        messages.warning(request, "Invalid action",)
+        return redirect('admin_users:salary_advance_request')
+    
+    return redirect('admin_users:salary_advance_request')
+
+
+
+def vett_leave_request(request, id):
+    if request.method == 'POST':
+        get_action = request.POST.get("action")
+        leave_req = get_object_or_404(Leave, id=id)
+        print(leave_req)
+        leave_req.status = get_action
+        leave_req.save()
+    else:
+        messages.warning(request, "Invalid action",)
+        return redirect('admin_users:leave_request')
+    
+    return redirect('admin_users:leave_request')
+
+    
+
+        
+       

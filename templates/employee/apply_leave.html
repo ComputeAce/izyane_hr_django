@@ -2,153 +2,102 @@
 {% load static %}
 
 {% block content %}
-<div class="page-wrapper">
-    <div class="content container-fluid">
-        <!-- Breadcrumb -->
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12 mb-4">
-                <div class="breadcrumb-path">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">
-                                <img src="{% static 'assets/img/dash.png' %}" class="mr-2" alt="breadcrumb">Home
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">Leave</li>
-                    </ul>
-                    <h3>Leave</h3>
+
+<div class="container my-4">
+    <!-- Leave Request Form -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Submit a Leave Request</strong>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'employees:leave_request' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="start_date">Start Date</label>
+                            <input type="date" id="start_date" name="start_date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">End Date</label>
+                            <input type="date" id="end_date" name="end_date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="leave_type">Leave Type</label>
+                            <select id="leave_type" name="leave_type" class="form-control" required>
+                                <option value="Vacation">Vacation</option>
+                                <option value="Sick Leave">Sick Leave</option>
+                                <option value="Personal Leave">Personal Leave</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason</label>
+                            <textarea id="reason" name="reason" rows="4" class="form-control" placeholder="Enter your reason for leave" required></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Apply Leave</h2>
-
-                        {% if messages %}
-                        <div class="alert alert-dismissible fade show" role="alert">
-                            {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{% url 'employees:leave_request' %}">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>Leave Type <span class="mandatory">*</span></label>
-                                        <select class="form-control" name="leave_type">
-                                            <option value="">Select leave</option>
-                                            <option value="Vacation">Vacation</option>
-                                            <option value="Leave">Leave</option>
-                                            <option value="Bereavement">Bereavement</option>
-                                            <option value="Paternity">Paternity</option>
-                                            <option value="Maternity">Maternity</option>
-                                            <option value="Time Off with Pay">Time Off with Pay</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>                          
-                                
-                            
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>From</label>
-                                        <input name="start_date" type="date" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>To</label>
-                                        <input name="end_date" type="date" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-12 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label>Reason</label>
-                                        <textarea name="reason" rows="4" class="form-control" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <button type="submit" class="btn btn-primary">Apply</button>
-                        
-                        </form>
-                    </div>
+   
+        <div class="col-lg-12 col-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Your Leave Requests</strong>
                 </div>
-            </div>
-        </div>
-
-        <!-- Employee Leave Records -->
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Leave Records</h2>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table custom-table">
-                                <thead>
-                                    <tr>
-                                        <th>Employee</th>
-                                        <th>Leave Type</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Notes</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for leave in get_user_leaves %}
-                                    <tr>
-                                        <td>
-                                            <div class="table-img">
-                                                <a href="profile.html">
-                                                    <img src="{% static 'assets/img/profiles/avatar-13.jpg' %}" alt="profile" class="img-table">
-                                                </a>
-                                                <label>{{ leave.user.first_name }} {{ leave.user.last_name }}</label>
-                                            </div>
-                                        </td>
-                                        <td>{{ leave.leave_type }}</td>
-                                        <td>{{ leave.start_date|date:"d M Y" }}</td>
-                                        <td>{{ leave.end_date|date:"d M Y" }}</td>
-                                        <td>{{ leave.reason }}</td>
-                                        <td>
-                                            {% if leave.hr_approved and leave.director_approved %}
-                                                <span class="badge badge-success">Approved</span>
-                                            {% elif leave.hr_approved %}
-                                                <span class="badge badge-info">HR Approved</span>
-                                            {% else %}
-                                                <span class="badge badge-warning">Pending</span>
-                                            {% endif %}
-                                        </td>
-                                        <td><a href="#" class="text-danger">Delete <i data-feather="trash-2"></i></a></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for leave in get_user_leaves %}
+                                <tr>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ leave.user.first_name }} {{ leave.user.last_name }}
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ leave.user.profile.department }}
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ leave.user.employee.position }}
+                                    </td>
+                                    <td>{{ leave.start_date }}</td>
+                                    <td>{{ leave.end_date }}</td>
+                                    <td class="text-truncate" style="max-width: 200px;">
+                                        {{ leave.reason }}
+                                    </td>
+                                    <td>
+                                        {% if leave.status == 'Pending' %}
+                                            <span class="badge badge-warning">Pending</span>
+                                        {% elif leave.status == 'Approved' %}
+                                            <span class="badge badge-success">Approved</span>
+                                        {% elif leave.status == 'Rejected' %}
+                                            <span class="badge badge-danger">Rejected</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

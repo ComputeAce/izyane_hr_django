@@ -1,0 +1,131 @@
+
+<!-- Page Content -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <!-- Employee Profile Overview -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Employee Profile</h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <img 
+                            src="{% static 'images/default_profile.png' %}" 
+                            alt="Employee Profile Picture" 
+                            class="img-fluid rounded-circle mb-3" 
+                            width="150"
+                            height="150"
+                        />
+                        <h3>John Doe</h3>
+                        <p>Software Engineer</p>
+                        <p>IT Department</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Details -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Employment Details</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <td>EMP12345</td>
+                                </tr>
+                                <tr>
+                                    <th>Position</th>
+                                    <td>Software Engineer</td>
+                                </tr>
+                                <tr>
+                                    <th>Department</th>
+                                    <td>IT</td>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <td>01-Jan-2020</td>
+                                </tr>
+                                <tr>
+                                    <th>Employment Status</th>
+                                    <td>Full-Time</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Contact Information -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Contact Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>john.doe@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>+1234567890</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>123 Main Street, City, Country</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance and Reviews -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Performance and Reviews</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Performance reviews and feedback will be displayed here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Leave and Attendance -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Leave and Attendance</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Leave balances and attendance records will be displayed here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Documents</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Employee-related documents will be displayed here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->

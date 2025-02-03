@@ -2,139 +2,111 @@
 {% load static %}
 
 {% block content %}
-<div class="page-wrapper">
-    <div class="content container-fluid">
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="breadcrumb-path mb-4">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="">Home</a></li>
-                        <li class="breadcrumb-item active">Employees</li>
-                    </ul>
-                    <h3>Create Employees</h3>
-                </div>
-         
-            </div>
-
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-titles">Basic Details <span>Organized and secure.</span></h2>
-                    </div>
-                    <div class="card-body">
-                        <form action="{% url 'admin_users:create_employee' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-xl-6 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            Tpin, social security number id type , nrc or passport number
-
-                            <div class="card mt-4">
-                                <div class="card-header">
-                                    <h2 class="card-titles">Employment Details <span>Let everyone know the essentials so they're fully prepared.</span></h2>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <select name="employment_type" class="form-control" required>
-                                                    <option value="" disabled selected>Employment Type</option>
-                                                    <option value="onsite">Onsite</option>
-                                                    <option value="remote">Remote</option>
-                                                    <option value="part-time">Part-Time</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <select name="position" class="form-control" required>
-                                                    <option value="" disabled selected>Position</option>
-                                                    <option value="developer">Developer</option>
-                                                    <option value="marketing">Marketing</option>
-                                                    <option value="operations">Operations</option>
-                                                    <option value="sales">Sales</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <select name="employment_status" class="form-control" required>
-                                                    <option value="" disabled selected>Employment Status</option>
-                                                    <option value="permanent">Permanent</option>
-                                                    <option value="internship">Internship</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <select name="department" class="form-control" required>
-                                                    <option value="" disabled selected>Department</option>
-                                                    <option value="hr">HR</option>
-                                                    <option value="it">IT</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card mt-4">
-                                <div class="card-header">
-                                    <h2 class="card-titles">Salary Details <span>Stored securely, only visible to Super Admins, Payroll Admins, and themselves.</span></h2>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <select name="currency" class="form-control" required>
-                                                    <option value="" disabled selected>Currency</option>
-                                                    <option value="usd">USD ($)</option>
-                                                    <option value="kwacha">Kwacha (K)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <label>Salary</label>
-                                                <input type="number" name="salary_amount" class="form-control" placeholder="Gross Pay" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <div class="form-btn d-flex justify-content-center gap-2">
-                                        <button type="submit" class="btn btn-success btn-sm px-3 py-2">
-                                            <i data-feather="plus"></i> Add Employee
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Create Employee</h1>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" action=" {% url 'admin_users:create_employee' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Employee Details</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Employment Type</label>
+                                <select name="employment_type" class="form-control">
+                                    <option value="Full-Time">Full-Time</option>
+                                    <option value="Part-Time">Part-Time</option>
+                                    <option value="Contractor">Contractor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Position</label>
+                                <input type="text" name="position" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Employment Status</label>
+                                <select name="employment_status" class="form-control">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Compensation</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="form-group">
+                                <label>Salary Amount</label>
+                                <input type="number" name="salary_amount" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Currency</label>
+                                <select name="currency" class="form-control">
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="KES">KES</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select name="department" class="form-control">
+                                    <option value="HR">HR</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Add Employee</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
