@@ -24,7 +24,7 @@
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Profile</a>
                                 <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">update profile</a>
-                                <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">setting</a>
+                                <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">settings</a>
                             </div>
                         </nav>
                         <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -87,10 +87,57 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="custom-nav-contact" role="tabpanel" aria-labelledby="custom-nav-contact-tab">
+                                <div class="row">
+
+                                    <div class="col-md-6 my-5">
+                                        <form action="" method="POST">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Current password</label>
+                                                <input type="password" name=" current-password" class="form-control input-height" placeholder="Enter Current Password">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Password</label>
+                                                <input type="password" name="password" class="form-control input-height" placeholder="Password">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Confrim Password</label>
+                                                <input type="password" name="confrim-password" class="form-control input-height" placeholder="Confrim Password">
+                                            </div>
+
+                                            <button class="btn btn-success"> Save </button>
+                                        </form>
+                                    </div>
 
 
-                                
-                                
+                                    <div class="col-md-6 my-5">
+                                        <div class="col-md-8 text-center">
+                                            {% if request.user.profile.image %}
+                                                <img id="profilePreview" src="{{ request.user.profile.image.url }}" alt="User Image" class="img-fluid rounded-circle">
+                                            {% else %}
+                                                <img id="profilePreview" src="{% static 'profile2/user.jpg'' %}" alt="Default Profile" class="img-fluid rounded-circle">
+                                            {% endif %}
+                                        </div>
+        
+                                        <!-- Upload Section -->
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="profile_picture">Upload New Profile Picture</label>
+                                                <input 
+                                                    type="file" 
+                                                    id="profile_picture" 
+                                                    name="profile_picture" 
+                                                    class="form-control-file" 
+                                                    accept="image/*" 
+                                                    onchange="previewImage(event)" 
+                                                    required 
+                                                />
+                                            </div>
+                                    
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -100,6 +147,17 @@
     </div>
 </div>
 
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('profilePreview');
+            output.src = reader.result || '{% static "assets/img/blank-profile.jpg" %}';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 {% endblock %}
 
 {% block extra_css %}
