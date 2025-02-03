@@ -16,7 +16,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-        
+    """ 
     def save(self, *args, **kwargs):
         if self.image:
             super().save(*args, **kwargs)
@@ -41,7 +41,7 @@ class Profile(models.Model):
             os.rename(old_full_path, new_full_path)
             self.image.name = new_path
             super().save(*args, **kwargs)
-        
+        """
 
 
 class Employee(models.Model):
@@ -91,6 +91,12 @@ class Leave(models.Model):
     end_date = models.DateField()
     reason = models.TextField()
     leave_type = models.CharField(max_length=50, choices=LEAVE_TYPE_CHOICES, default='Others')
+    status_choices = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ]
+    status = models.CharField(max_length=10, choices=status_choices, default='Pending')
 
 
     def __str__(self):

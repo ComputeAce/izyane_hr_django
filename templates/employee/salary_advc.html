@@ -1,142 +1,96 @@
 {% extends 'includes/bootstrap.html' %}
 {% load static %}
+
 {% block content %}
-<div class="page-wrapper">
-    <div class="content container-fluid">
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12 mb-4">
-                <div class="breadcrumb-path">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">
-                                <img src="{% static 'assets/img/dash.png' %}" class="mr-2" alt="breadcrumb">Home
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">Salary Advance</li>
-                    </ul>
-                    <h3>Salary Advance</h3>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Apply Salary Advance</h2>
-                    </div>
-                    {% if messages %}
-                    <div class="alert alert-dismissible fade show" role="alert">
-                        {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+<div class="container my-4">
+    <!-- Salary Advance Request Form -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Submit a Salary Advance Request</strong>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'employees:salary_advc_request' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="request_date">Request Date</label>
+                            <input type="date" id="request_date" name="request_date" class="form-control" required>
                         </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    
-                    <div class="card-body">
-                        <form action="{% url 'employees:salary_advc_request' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>Amount <span class="mandatory">*</span></label>
-                                        <input name="amount" type="number" class="form-control" placeholder="Enter amount" required>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="row">
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>Advance Date</label>
-                                        <input name="repayment_start_date" type="date" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label>Repayment Period (Months)</label>
-                                        <input name="repayment_months" type="number" class="form-control" placeholder="Enter number of months" required>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="row">
-                                <div class="col-xl-12 col-sm-12 col-12">
-                                    <div class="form-group">
-                                        <label>Reason</label>
-                                        <textarea name="reason" rows="4" class="form-control" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <button type="submit" class="btn btn-primary">Apply</button>
-                        </form>                        
-                    </div>
+                        <div class="form-group">
+                            <label for="amount">Requested Amount</label>
+                            <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason</label>
+                            <textarea id="reason" name="reason" rows="4" class="form-control" placeholder="Enter the reason for salary advance" required></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-xl-12 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Salary Advance Records</h2>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table custom-table">
-                                <thead>
-                                    <tr>
-                                        <th>Employee</th>
-                                        <th>Amount</th>
-                                        <th>Advance Date</th>
-                                        <th>Repayment Date</th>
-                                        <th>Days Left</th>
-                                        <th>Notes</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                
-                                {% for advc in get_user_salary_advc %}
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="table-img">
-                                                <a href="profile.html">
-                                                    <img src="{% static 'assets/img/profiles/avatar-13.jpg' %}" alt="profile" class="img-table">
-                                                </a>
-                                                <label>Sean Black</label>
-                                            </div>
-                                        </td>
-                                        <td>{{ advc.amount }}</td>
-                                        <td>{{ advc.repayment_start_date|date:"d M Y" }}</td>
-                                        <td>
-                                            {% if advc.repayment_end_date %}
-                                                {{ advc.repayment_end_date|date:"d M Y" }}
-                                            {% else %}
-                                                N/A
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ advc.repayment_months }} Months</td>
-                                        
-                                        <td>{{ advc.reason }}</td>
-                                        <td><span class="badge badge-success">{{ advc.approval_status }}</span></td>
-                                        <td><a href="#" class="text-danger">Delete <i data-feather="trash-2"></i></a></td>
-                                    </tr>
-                                </tbody>
+    <!-- Salary Advance Requests Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Your Salary Advance Requests</strong>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Request Date</th>
+                                    <th>Requested Amount</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for advance in get_user_salary_advc %}
+                                <tr>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ advance.user.first_name }} {{ advance.user.last_name }}
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ advance.user.profile.department }}
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        {{ advance.user.employee.position }}
+                                    </td>
+                                    <td>{{ advance.request_date }}</td>
+                                    <td>{{ advance.amount }}</td>
+                                    <td class="text-truncate" style="max-width: 200px;">
+                                        {{ advance.reason }}
+                                    </td>
+                                    <td>
+                                        {% if advance.approval_status == 'Pending' %}
+                                            <span class="badge badge-warning">Pending</span>
+                                        {% elif advance.approval_status == 'Approved' %}
+                                            <span class="badge badge-success">Approved</span>
+                                        {% elif advance.approval_status == 'Rejected' %}
+                                            <span class="badge badge-danger">Rejected</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
                                 {% endfor %}
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

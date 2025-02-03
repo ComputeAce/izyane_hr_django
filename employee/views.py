@@ -23,9 +23,9 @@ def leave_form(request):
 
 def salary_advc_form(request):
     user = request.user.username
-    print(user)
     get_user_salary_advc = SalaryAdvance.objects.filter(user__username=user)
-    print(get_user_salary_advc)
+    for adv in get_user_salary_advc:
+        print(adv)
     context = { 
 
         'get_user_salary_advc': get_user_salary_advc
