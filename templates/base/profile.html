@@ -2,129 +2,111 @@
 {% load static %}
 
 {% block content %}
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Profile</h4>
+                </div>
 
-<!-- Page Content -->
-<div class="page-wrapper">
-    <div class="content container-fluid">
-        <div class="row justify-content-center mt-n3">
-            <div class="col-xl-6 col-sm-12 col-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <h2 class="card-titles">Profile</h2>
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
                     </div>
-                    <div class="card-body">
+                {% endfor %}
+                {% endif %}
+                
+                <div class="card-body">
+                    <div class="custom-tab">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Profile</a>
+                                <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">update profile</a>
+                                <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">setting</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                                <div class="row py-5">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="first-name-1" class="form-label">First Name</label>
+                                            <input type="text" id="first-name-1" value="{{ user.first_name | upper }}" class="form-control input-height" placeholder="Enter your first name" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="first-name-2" class="form-label">Last Name</label>
+                                            <input type="text" id="first-name-2" value="{{ user.last_name | upper }}" class="form-control input-height" placeholder="Enter your last name" readonly>
+                                        </div>
+                                    </div>
 
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <form method="POST" action="{% url 'base:user_profile' %}">
-                            {% csrf_token %}
-                            <div class="row">
-                                <!-- Username -->
-                                <div class="col-md-6 form-group">
-                                    <label for="username">Username</label>
-                                    <input 
-                                        type="text" 
-                                        id="username" 
-                                        name="username"
-                                        class="form-control" 
-                                        placeholder="Username" 
-                                        value="{{ user.username }}" 
-                                        required
-                                        readonly 
-                                    />
-                                </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="text" id="email" value="{{ user.email }}" class="form-control input-height" placeholder="Enter your email" readonly>
+                                        </div>
+                                    </div>
 
-                                <!-- First Name -->
-                                <div class="col-md-6 form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input 
-                                        type="text" 
-                                        id="first_name"
-                                        name="first_name"
-                                        class="form-control" 
-                                        placeholder="First Name" 
-                                        value="{{ user.first_name }}" 
-                                        required 
-                                    />
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="position" class="form-label">Position</label>
+                                            <input type="text" id="position" value="{{ user.employee.position | upper }}" class="form-control input-height" placeholder="Enter your position" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
+                                <form action="{% url 'base:user_profile' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="row py-5">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="first-name-1" class="form-label">First Name</label>
+                                                <input type="text" id="first-name-1" name="first_name" value="{{ user.first_name | upper }}" class="form-control input-height" placeholder="Enter your first name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="first-name-2" class="form-label">Last Name</label>
+                                                <input type="text" id="first-name-2" name="last_name" value="{{ user.last_name | upper }}" class="form-control input-height" placeholder="Enter your last name">
+                                            </div>
+                                        </div>
 
-                            <div class="row">
-                                <!-- Last Name -->
-                                <div class="col-md-6 form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input 
-                                        type="text" 
-                                        id="last_name" 
-                                        name="last_name"
-                                        class="form-control" 
-                                        placeholder="Last Name" 
-                                        value="{{ user.last_name }}" 
-                                        required 
-                                    />
-                                </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="text" id="email" name="email" value="{{ user.email }}" class="form-control input-height" placeholder="Enter your email">
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <!-- Email -->
-                                <div class="col-md-6 form-group">
-                                    <label for="email">Email</label>
-                                    <input 
-                                        type="email" 
-                                        id="email" 
-                                        name="email"
-                                        class="form-control" 
-                                        placeholder="Email Address" 
-                                        value="{{ user.email }}" 
-                                        required 
-                                    />
-                                </div>
+                                    <button type="submit" class="btn btn-success"> Submit </button>
+                                </form>
                             </div>
+                            <div class="tab-pane fade" id="custom-nav-contact" role="tabpanel" aria-labelledby="custom-nav-contact-tab">
 
-                            <div class="row">
-                                <!-- Job Title -->
-                                <div class="col-md-6 form-group">
-                                    <label for="job_title">Job Title</label>
-                                    <input 
-                                        type="text" 
-                                        id="job_title"
-                                        name="job_title" 
-                                        class="form-control" 
-                                        placeholder="Job Title" 
-                                        value="{{ user.employee.position }}" 
-                                        readonly 
-                                    />
-                                </div>
 
-                                <!-- Employment Status -->
-                                <div class="col-md-6 form-group">
-                                    <label for="employment_status">Employment Type</label>
-                                    <input 
-                                        type="text" 
-                                        id="employment_status" 
-                                        class="form-control" 
-                                        placeholder="Permanent" 
-                                        value="{{ user.employee.employment_type }}" 
-                                        readonly
-                                    />
-                                </div>
+                                
+                                
                             </div>
-
-                            <!-- Update Profile Button -->
-                            <div class="form-btn text-center">
-                                <button type="submit" class="btn btn-success">Update Profile</button>
-                            
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- /Page Content -->
 
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .input-height {
+        height: 45px; /* Set a fixed height */
+        padding: 10px; /* Adjust padding for more height */
+    }
+</style>
 {% endblock %}

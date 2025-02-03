@@ -91,7 +91,7 @@
                             {% endif %}
                         </a>
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="{% url 'base:user_profile' %}"><i class="fa fa-user"></i> My Profile</a>
                             <a class="nav-link" href=" {% url 'base:logout_user' %}"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
