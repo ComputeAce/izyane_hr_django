@@ -5,13 +5,33 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib import messages
-from base.models import Profile
+from base.models import Profile, Employee, Leave, SalaryAdvance
 
 
 
 @login_required(login_url='/login')
 def home(request):
-    return render(request, 'base/home.html')
+    get_all_employees = Employee.objects.count()
+    get_all_leave_requests = Leave.objects.count()
+    get_all_salary_advc_requests = SalaryAdvance.objects.count()
+    get_all_approved_leaves = Leave.objects.filter(status = 'Approved').count()
+    get_all_rejected_leaves = Leave.objects.filter(status = 'Rejected').count()
+    get_all_approved_salary_advc = SalaryAdvance.objects.filter(approval_status = 'Approved').count()
+    get_all_rejected_salary_advc = SalaryAdvance.objects.filter(approval_status =  'Rejected').count()
+    get_all_users = User.objects.all()
+
+   
+    context = {
+        'get_all_employees':  get_all_employees,
+        'get_all_leave_requests': get_all_leave_requests,
+        'get_all_salary_advc_requests': get_all_salary_advc_requests,
+        'get_all_users': get_all_users,
+        'get_all_approved_leaves': get_all_approved_leaves,
+        'get_all_rejected_leaves':  get_all_rejected_leaves,
+        'get_all_approved_salary_advc': get_all_approved_salary_advc,
+        'get_all_rejected_salary_advc':  get_all_rejected_salary_advc
+    }
+    return render(request, 'base/home.html', context)
 
 
 def login(request):

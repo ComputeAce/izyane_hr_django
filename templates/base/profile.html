@@ -114,16 +114,30 @@
                                     <div class="col-md-6 my-5">
                                         <div class="col-md-8 text-center">
                                             {% if request.user.profile.image %}
-                                                <img id="profilePreview" src="{{ request.user.profile.image.url }}" alt="User Image" class="img-fluid rounded-circle">
+                                                <img 
+                                                    id="profilePreview" 
+                                                    src="{{ request.user.profile.image.url }}" 
+                                                    alt="User Image" 
+                                                    class="img-fluid rounded-circle" 
+                                                    style="cursor: pointer;" 
+                                                    onclick="document.getElementById('profile_picture').click();" 
+                                                >
                                             {% else %}
-                                                <img id="profilePreview" src="{% static 'profile2/user.jpg'' %}" alt="Default Profile" class="img-fluid rounded-circle">
+                                                <img 
+                                                    id="profilePreview" 
+                                                    src="{% static 'profile2/user.jpg' %}" 
+                                                    alt="Default Profile" 
+                                                    class="img-fluid rounded-circle" 
+                                                    style="cursor: pointer;" 
+                                                    onclick="document.getElementById('profile_picture').click();" 
+                                                >
                                             {% endif %}
                                         </div>
-        
-                                        <!-- Upload Section -->
+                                    
+                                        <!-- Hidden File Input -->
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="profile_picture">Upload New Profile Picture</label>
+                                                <label for="profile_picture" style="display: none;">Upload New Profile Picture</label>
                                                 <input 
                                                     type="file" 
                                                     id="profile_picture" 
@@ -131,11 +145,28 @@
                                                     class="form-control-file" 
                                                     accept="image/*" 
                                                     onchange="previewImage(event)" 
-                                                    required 
-                                                />
+                                                    style="display: none;" 
+                                                >
                                             </div>
-                                    
+
+                                            <button class="btn btn-success text-center justify-content-center"> Update </button>
+                                        </div>
+
+                                        
                                     </div>
+                                    
+                                    <script>
+                                        // Preview the selected image
+                                        function previewImage(event) {
+                                            const reader = new FileReader();
+                                            reader.onload = function () {
+                                                const output = document.getElementById('profilePreview');
+                                                output.src = reader.result;
+                                            };
+                                            reader.readAsDataURL(event.target.files[0]);
+                                        }
+                                    </script>
+                                    
                                 </div>
 
                             </div>
