@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Inline CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        h1, h4, h6 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Welcome to izyane!</h1>
+        </div>
+        <div class="content">
+            <h4>Hello {{ first_name }} {{ last_name }},</h4>
+            <p>We are excited to have you on board!</p>
+            <p>Use the following credentials to log in:</p>
+            <ul>
+                <li>Email: <strong>{{ email }}</strong></li>
+                <li>Password: <strong>{{ password }}</strong></li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ year }} Izyane Inc. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

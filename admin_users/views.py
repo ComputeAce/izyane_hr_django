@@ -4,6 +4,14 @@ from .utils import generate_password
 from django.contrib import messages
 from django.db import IntegrityError
 from base.models import Employee, Profile, Leave, SalaryAdvance
+from notification.views import (
+    
+    send_mail_new_employee,
+    VetLeaveNotification
+
+)
+
+
 
 def user_management(request):
     get_user_count = User.objects.all().count()
@@ -54,6 +62,8 @@ def create_employee(request):
         add_user_to_department = Profile.objects.get(user=user)
         add_user_to_department.department = new_department
         add_user_to_department.save()
+
+        send_mail_new_employee(email, password)
     
         messages.success(request, "Employee added successfully!")
         return redirect('admin_users:user_management')
@@ -97,9 +107,11 @@ def vett_leave_request(request, id):
     if request.method == 'POST':
         get_action = request.POST.get("action")
         leave_req = get_object_or_404(Leave, id=id)
-        print(leave_req)
+        
         leave_req.status = get_action
         leave_req.save()
+        leave_obj = VetLeaveNotification(leave_req.id, get_action)
+        leave_obj.send_mail_application()
     else:
         messages.warning(request, "Invalid action",)
         return redirect('admin_users:leave_request')
