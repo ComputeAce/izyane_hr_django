@@ -42,6 +42,18 @@
                 <div class="card-header">
                     <strong class="card-title">Your Salary Advance Requests</strong>
                 </div>
+
+                
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">

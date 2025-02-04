@@ -7,7 +7,8 @@ from base.models import Employee, Profile, Leave, SalaryAdvance
 from notification.views import (
     
     send_mail_new_employee,
-    VetLeaveNotification
+    VetLeaveNotification,
+    VetSalaryAdvanceNotification,
 
 )
 
@@ -95,6 +96,9 @@ def vett_salary_advc_request(request, id):
         salary_adv = get_object_or_404(SalaryAdvance, id=id)
         salary_adv.approval_status = get_action
         salary_adv.save()
+        salary_adv_obj = VetSalaryAdvanceNotification(salary_adv.id, get_action)
+        salary_adv_obj.send_mail_application()
+
     else:
         messages.warning(request, "Invalid action",)
         return redirect('admin_users:salary_advance_request')
@@ -107,6 +111,7 @@ def vett_leave_request(request, id):
     if request.method == 'POST':
         get_action = request.POST.get("action")
         leave_req = get_object_or_404(Leave, id=id)
+
         
         leave_req.status = get_action
         leave_req.save()

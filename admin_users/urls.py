@@ -17,6 +17,6 @@ urlpatterns = [
     path('create-employee/', create_employee, name='create_employee'),
     path('leave-request/', leave_request, name='leave_request'),
     path('salary-advance-request/', salary_advance_request, name='salary_advance_request'),
-    path('vett-salary-request/<int:id>/', vett_salary_advc_request, name='vett_salary_request'),
+    path('vett_salary_advc_request/<int:id>/', vett_salary_advc_request, name='vett_salary_advc_request'),
     path('vett-leave-request/<int:id>/', vett_leave_request, name='vett_leave_request'),
 ]
