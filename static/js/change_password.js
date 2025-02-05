@@ -93,7 +93,7 @@ $(document).ready(function () {
                         '<p style="font-size: 16px; color: orange;">You will be logged out shortly.</p>'
                     );
                     
-                    // Wait for 10 seconds before redirecting
+                  
                     setTimeout(function () {
                         window.location.href = '/logout_user/';  
                     }, 10000);  
