@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* General email styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .content h4 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-left: 4px solid #007bff;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Email header -->
+        <div class="header">
+            <h1>Leave Application Notification</h1>
+        </div>
+
+        <!-- Email content -->
+        <div class="content">
+            <h4>Dear {{ first_name }} {{ last_name }},</h4>
+            <p class="message">{{ message }}</p>
+            <p>If you have any questions, feel free to reach out to HR at {{ hr_email }}.</p>
+        </div>
+
+        <!-- Email footer -->
+        <div class="footer">
+            &copy; {{ now.year }} Company Name. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

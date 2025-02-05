@@ -1,0 +1,128 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row justify-content-center mt-n3">
+            <!-- Change Password Section -->
+            <div class="col-md-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h2 class="card-titles">Change Password</h2>
+                        <p class="text-muted">Your password must be at least 8 characters long.</p>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'base:user_settings' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="current_password">Current Password</label>
+                                <input 
+                                    type="password" 
+                                    name="current_password" 
+                                    id="current_password" 
+                                    class="form-control" 
+                                    placeholder="Enter Current Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="new_password">New Password</label>
+                                <input 
+                                    type="password" 
+                                    name="new_password" 
+                                    id="new_password" 
+                                    class="form-control" 
+                                    placeholder="Enter New Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">Repeat Password</label>
+                                <input 
+                                    type="password" 
+                                    name="confirm_password" 
+                                    id="confirm_password" 
+                                    class="form-control" 
+                                    placeholder="Repeat New Password" 
+                                    required 
+                                />
+                            </div>
+                            <div class="form-btn">
+                                <button type="submit" class="btn btn-success">Change Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Profile Picture Section -->
+            <div class="col-md-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h2 class="card-titles">Update Profile Picture</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action=" {% url 'base:update_profile_img' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row justify-content-center">
+                       
+                                <div class="col-md-8 text-center">
+                                    {% if request.user.profile.image %}
+                                        <img id="profilePreview" src="{{ request.user.profile.image.url }}" alt="User Image" class="img-fluid rounded-circle">
+                                    {% else %}
+                                        <img id="profilePreview" src="{% static 'assets/img/blank-profile.jpg' %}" alt="Default Profile" class="img-fluid rounded-circle">
+                                    {% endif %}
+                                </div>
+
+                                <!-- Upload Section -->
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="profile_picture">Upload New Profile Picture</label>
+                                        <input 
+                                            type="file" 
+                                            id="profile_picture" 
+                                            name="profile_picture" 
+                                            class="form-control-file" 
+                                            accept="image/*" 
+                                            onchange="previewImage(event)" 
+                                            required 
+                                        />
+                                    </div>
+                                    <div class="form-btn mt-3">
+                                        <button type="submit" class="btn btn-success">Update Profile Picture</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Image Preview Script -->
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('profilePreview');
+            output.src = reader.result || '{% static "assets/img/blank-profile.jpg" %}';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+{% endblock %}

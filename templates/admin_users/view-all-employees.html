@@ -1,0 +1,141 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+/* Add this in your custom CSS file */
+.badge-complete {
+    background-color: green;
+    color: white;
+}
+
+.badge-pending {
+    background-color: red;
+    color: white;
+}
+
+
+</style>
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Table</a></li>
+                            <li class="active">Employees</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">All Employees</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Avatar</th>
+                                        <th>Name</th>
+                                        <th>Department</th>
+                                        <th>Position</th>
+                                        <th>Status</th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for employee in all_employees %}
+                                    <tr>
+                                        <td class="avatar">
+                                            {% if employee.user.profile.image %}
+                                            <div class="round-img">
+                                                <a href="#">
+                                                    <img 
+                                                        class="rounded-circle" 
+                                                        src="{{ employee.user.profile.image.url }}" 
+                                                        alt="Avatar" 
+                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                </a>
+                                            </div>
+                                            {% else %}
+                                            <div class="round-img">
+                                                <img 
+                                                    class="rounded-circle" 
+                                                    src="{% static 'profile2/user.jpg' %}"
+                                                    alt="Avatar" 
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ employee.user.first_name | upper }} {{ employee.user.last_name | upper }}</td>
+                                        <td>{{ employee.user.profile.department | upper }}</td>
+                                        <td>{{ employee.position | upper }}</td>
+                                        <td>
+
+                                            {% if employee.user.is_active %}
+
+                                                <span class="badge badge-complete">Active</span>
+
+                                            {% else %}
+
+                                                <span class="badge badge-pending">Inactive</span>
+
+                                            {% endif %}
+
+                                        </td>
+                                        
+                                       
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- .table-responsive -->
+                    </div>
+                    <!-- .card-body -->
+                </div>
+                <!-- .card -->
+            </div>
+            <!-- .col-md-12 -->
+        </div>
+        <!-- .row -->
+    </div>
+    <!-- .animated -->
+</div>
+<!-- .content -->
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>
+<script src="{% static 'js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Initialize DataTable on the table with id "bootstrap-data-table"
+        $('#bootstrap-data-table').DataTable();
+    });
+</script>
+
+{% endblock %}
