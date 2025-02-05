@@ -123,6 +123,16 @@ def vett_leave_request(request, id):
     
     return redirect('admin_users:leave_request')
 
+
+def all_employee(request):
+    all_employees = Employee.objects.all()
+
+    context = {
+
+        'all_employees':all_employees
+
+    }
+    return render(request, 'admin_users/view-all-employees.html', context)
     
 
         

@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib import messages
 from base.models import Profile, Employee, Leave, SalaryAdvance
+from django.http import JsonResponse
 
 
 
@@ -148,3 +149,52 @@ def view_employee(request):
 def logout_user(request):
     logout(request)
     return redirect('base:login')
+
+
+@login_required
+def submit_change_password(request):
+    if request.method == "POST":
+        user = request.user
+
+        get_new_password = request.POST.get('new_password')
+        get_current_password = request.POST.get('current_password') 
+        
+        if not get_new_password:
+            return JsonResponse({'error': 'New password is required'}, status=400)
+        
+        if get_current_password:
+        
+            user = authenticate(username=user.username, password=get_current_password)
+            if not user:
+                return JsonResponse({'error': 'Current password is incorrect'}, status=400)
+
+        user.set_password(get_new_password)
+        user.save()
+
+        return JsonResponse({'message': 'Password updated successfully'})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+
+@login_required
+def update_password(request):
+    if request.method == "POST":
+        current_password = request.POST.get('current_password')
+        username = request.user.username
+
+        user = authenticate(username=username, password=current_password)
+        if user:
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Password is correct',
+                'current_password': current_password
+            })
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Invalid password',
+                'current_password': current_password
+            })
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})

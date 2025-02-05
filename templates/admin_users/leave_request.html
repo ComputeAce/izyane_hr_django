@@ -54,12 +54,12 @@
                                 <tbody>
                                     {% for leave in leaves %}
                                     <tr>
-                                        <td>{{ leave.user.first_name }} {{ leave.user.last_name }}</td>
-                                        <td>{{ leave.user.profile.department }}</td>
-                                        <td>{{ leave.user.employee.position }}</td>
-                                        <td>{{ leave.start_date }}</td>
-                                        <td>{{ leave.end_date }}</td>
-                                        <td>{{ leave.reason }}</td>
+                                        <td>{{ leave.user.first_name | upper }} {{ leave.user.last_name | upper }}</td>
+                                        <td>{{ leave.user.profile.department | upper }}</td>
+                                        <td>{{ leave.user.employee.position | upper }}</td>
+                                        <td>{{ leave.start_date |date:"Y, M d-D" }}</td>
+                                        <td>{{ leave.end_date |date:"Y, M d-D" }}</td>
+                                        <td>{{ leave.reason | upper }}</td>
                                         <td>
                                             {% if leave.status == "Pending" %}
                                             <span class="badge badge-warning">Pending</span>

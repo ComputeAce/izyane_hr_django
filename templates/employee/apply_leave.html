@@ -78,18 +78,18 @@
                                 {% for leave in get_user_leaves %}
                                 <tr>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ leave.user.first_name }} {{ leave.user.last_name }}
+                                        {{ leave.user.first_name  | upper}} {{ leave.user.last_name | upper}}
                                     </td>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ leave.user.profile.department }}
+                                        {{ leave.user.profile.department | upper }}
                                     </td>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ leave.user.employee.position }}
+                                        {{ leave.user.employee.position | upper }}
                                     </td>
-                                    <td>{{ leave.start_date }}</td>
-                                    <td>{{ leave.end_date }}</td>
+                                    <td>{{ leave.start_date | date:"Y, M d-D" }}</td>
+                                    <td>{{ leave.end_date | date:"Y, M d-D" }}</td>
                                     <td class="text-truncate" style="max-width: 200px;">
-                                        {{ leave.reason }}
+                                        {{ leave.reason | upper }}
                                     </td>
                                     <td>
                                         {% if leave.status == 'Pending' %}

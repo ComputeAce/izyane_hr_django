@@ -72,18 +72,18 @@
                                 {% for advance in get_user_salary_advc %}
                                 <tr>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ advance.user.first_name }} {{ advance.user.last_name }}
+                                        {{ advance.user.first_name | upper }} {{ advance.user.last_name | upper }}
                                     </td>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ advance.user.profile.department }}
+                                        {{ advance.user.profile.department | upper }}
                                     </td>
                                     <td class="text-truncate" style="max-width: 150px;">
-                                        {{ advance.user.employee.position }}
+                                        {{ advance.user.employee.position | upper }}
                                     </td>
-                                    <td>{{ advance.request_date }}</td>
+                                    <td>{{ advance.request_date  | date:"Y, M d-D" }}</td>
                                     <td>{{ advance.amount }}</td>
                                     <td class="text-truncate" style="max-width: 200px;">
-                                        {{ advance.reason }}
+                                        {{ advance.reason | upper }}
                                     </td>
                                     <td>
                                         {% if advance.approval_status == 'Pending' %}

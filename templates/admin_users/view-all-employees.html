@@ -2,6 +2,22 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+
+/* Add this in your custom CSS file */
+.badge-complete {
+    background-color: green;
+    color: white;
+}
+
+.badge-pending {
+    background-color: red;
+    color: white;
+}
+
+
+</style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -18,7 +34,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Table</a></li>
-                            <li class="active">Salary Advance</li>
+                            <li class="active">Employees</li>
                         </ol>
                     </div>
                 </div>
@@ -33,50 +49,63 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Salary Advance Requests</strong>
+                        <strong class="card-title">All Employees</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>Avatar</th>
                                         <th>Name</th>
                                         <th>Department</th>
                                         <th>Position</th>
-                                        <th>Amount</th>
-                                        <th>Note</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                    
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for advc in salary_advc %}
+                                    {% for employee in all_employees %}
                                     <tr>
-                                        <td>{{ advc.user.first_name | upper }} {{ advc.user.last_name | upper }}</td>
-                                        <td>{{ advc.user.profile.department | upper }}</td>
-                                        <td>{{ advc.user.employee.position | upper }}</td>
-                                        <td>{{ advc.amount }}</td>
-                                        <td>{{ advc.reason | upper }}</td>
-                                        <td>
-                                            {% if advc.approval_status == "Pending" %}
-                                            <span class="badge badge-warning">Pending</span>
-                                            {% elif advc.approval_status == "Approved" %}
-                                            <span class="badge badge-success">Approved</span>
+                                        <td class="avatar">
+                                            {% if employee.profile.image %}
+                                            <div class="round-img">
+                                                <a href="#">
+                                                    <img 
+                                                        class="rounded-circle" 
+                                                        src="{{ employee.user.profile.image.url }}" 
+                                                        alt="Avatar" 
+                                                        style="width: 40px; height: 40px; object-fit: cover;">
+                                                </a>
+                                            </div>
                                             {% else %}
-                                            <span class="badge badge-danger">Rejected</span>
+                                            <div class="round-img">
+                                                <img 
+                                                    class="rounded-circle" 
+                                                    src="{% static 'profile2/user.jpg' %}"
+                                                    alt="Avatar" 
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            </div>
                                             {% endif %}
                                         </td>
+                                        <td>{{ employee.user.first_name | upper }} {{ employee.user.last_name | upper }}</td>
+                                        <td>{{ employee.user.profile.department | upper }}</td>
+                                        <td>{{ employee.position | upper }}</td>
                                         <td>
-                                            {% if advc.approval_status == "Pending" %}
-                                            <form action="{% url 'admin_users:vett_salary_advc_request' advc.id %}" method="POST">
-                                                {% csrf_token %}
-                                                <button type="submit" name="action" value="Approved" class="btn btn-success btn-sm">Approve</button>
-                                                <button type="submit" name="action" value="Rejected" class="btn btn-danger btn-sm">Reject</button>
-                                            </form>
+
+                                            {% if employee.user.is_active %}
+
+                                                <span class="badge badge-complete">Active</span>
+
                                             {% else %}
-                                            <span class="text-muted">No actions available</span>
+
+                                                <span class="badge badge-pending">Inactive</span>
+
                                             {% endif %}
+
                                         </td>
+                                        
+                                       
                                     </tr>
                                     {% endfor %}
                                 </tbody>
