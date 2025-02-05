@@ -12,6 +12,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, null=True, blank=True)
+    phone_number = models.IntegerField(blank=True, null=True)
+    nhima_number = models.IntegerField(blank=True, null= True) 
+    nrc_back = models.ImageField(upload_to='nrc', blank=True, null=True)
+    nrc_front = models.ImageField(upload_to='nrc', blank=True, null=True)
+    ssn = models.IntegerField(null=True, blank=True)
+    tpin = models.IntegerField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
