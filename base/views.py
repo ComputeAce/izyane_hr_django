@@ -101,33 +101,6 @@ def user_profile(request):
     return render(request, 'base/profile.html')
 
 
-def user_settings(request):
-    if request.method == 'POST':
-        get_current_password = request.POST.get('new_password')
-        get_new_password = request.POST.get('current_password')
-        get_confirm_password = request.POST.get('confirm_password')
-
-    
-
-        username = request.user.username
-        user =  authenticate(request, username=username, password=get_current_password)
-        if user is not None:
-            if get_new_password != get_confirm_password:
-                messages.warning(request, "Password does not match!")
-                return redirect('base:user_settings')
-            
-            user.set_password(get_new_password)
-            user.save()
-
-            messages.info(request, "Password changed successfully!")
-            logout(request)
-            return redirect('base:login')
-        else:
-            messages.warning(request, "Invalid current password!")
-            return redirect('base:user_settings')
-
-    return render(request, 'base/user_settings.html')
-
 def update_profile_img(request):
     if request.method == 'POST' and 'profile_picture' in request.FILES:
     

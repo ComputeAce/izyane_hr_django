@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import (
-    user_management, 
     add_employee, 
     create_employee, 
     leave_request, 
@@ -13,7 +12,6 @@ from .views import (
 app_name = "admin_users"
 
 urlpatterns = [
-    path('user-management/', user_management, name='user_management'),
     path('add-employee/', add_employee, name='add_employee'),
     path('create-employee/', create_employee, name='create_employee'),
     path('leave-request/', leave_request, name='leave_request'),
