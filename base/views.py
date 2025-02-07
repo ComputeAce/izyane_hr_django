@@ -45,9 +45,9 @@ def login(request):
                 auth_login(request, user)
                 return redirect("base:home")
             else:
-                messages.error(request, "Invalid credentials")
+                messages.warning(request, "Invalid credentials")
         except User.DoesNotExist:
-            messages.error(request, "Invalid credentials")
+            messages.warning(request, "Invalid credentials")
 
     return render(request, "base/login.html")
     

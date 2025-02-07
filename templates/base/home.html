@@ -1,361 +1,401 @@
 {% extends 'includes/bootstrap.html' %}
-{% load static  %}
+{% load static %}
 
 {% block content %}
-   
-        <!-- Content -->
-        <div class="content">
-            <!-- Animated -->
-            <div class="animated fadeIn">
-                <!-- Widgets  -->
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-1">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text">$<span class="count">{{ get_all_salary_advc_requests }}</span></div>
-                                            <div class="stat-heading">Salary Advance Requests</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--! ================================================================ !-->
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Widgets</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Tables</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex d-md-none">
+                        <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                            <i class="feather-arrow-left me-2"></i>
+                            <span>Back</span>
+                        </a>
                     </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-2">
-                                        <i class="pe-7s-cart"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">{{ get_all_leave_requests }}</span></div>
-                                            <div class="stat-heading">Leaves Requests</div>
-                                        </div>
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div class="dropdown filter-dropdown">
+                            <a class="btn btn-md btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
+                                <i class="feather-filter me-2"></i>
+                                <span>Filter</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Role" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Role">Role</label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-            
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-4">
-                                        <i class="pe-7s-users"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="count">{{ get_all_employees}}</span></div>
-                                            <div class="stat-heading">Employees</div>
-                                        </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Team" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Team">Team</label>
                                     </div>
                                 </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Email" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Member" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Member">Member</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Recommendation" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Recommendation">Recommendation</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-plus me-3"></i>
+                                    <span>Create New</span>
+                                </a>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-filter me-3"></i>
+                                    <span>Manage Filter</span>
+                                </a>
                             </div>
                         </div>
+                        <a href="javascript:void(0);" class="btn btn-md btn-primary">
+                            <i class="feather-plus me-2"></i>
+                            <span>Add widget</span>
+                        </a>
                     </div>
                 </div>
-                <!-- /Widgets -->
-                <!--  Traffic  -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="box-title">Employees</h4>
-                                        </div>
-                                        <div class="card-body--">
-                                            <div class="table-stats order-table ov-h">
-                                                <table class="table ">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="serial">#</th>
-                                                            <th class="avatar">Avatar</th>
-                                                            <th>ID</th>
-                                                            <th>Name</th>
-                                                            <th>Department</th>
-                                                            <th>Position</th>
-                                                            <th>Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    {% for user in get_all_users %}
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="serial">1.</td>
-                                                            <td class="avatar">
-                                                                {% if user.profile.image %}
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle" src="{{ user.profile.image.url }}" alt=""></a>
-                                                                    </div>
-                                                                {% else %}
-
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle" src="{% static 'profile2/user.jpg' %}" alt=""></a>
-                                                                    </div>
-                                                                {% endif %}
-                                                              
-
-                                                            </td>
-                                                            <td> {{ user.id }} </td>
-                                                            <td>  <span class="name">{{user.first_name | upper}} {{ user.last_name | upper}}</span> </td>
-                                                            <td> <span class="product">{{ user.profile.department}}</span> </td>
-                                                            <td><span>{{ user.employee.position | upper }}</span></td>
-                                                            <td>
-                                                                <span class="badge badge-complete">Active</span>
-                                                            </td>
-                                                        </tr>
-                                                    
-                                                    </tbody>
-                                                    {% endfor %}
-                                                </table>
-                                            </div> <!-- /.table-stats -->
-                                        </div>
-                                    </div> <!-- /.card -->
-                                </div>  <!-- /.col-lg-8 -->
-
-                                <div class="col-lg-4">
-                                    <div class="card-body">
-                                        <div class="progress-box progress-1">
-                                            <h4 class="por-title">Approved Leaves</h4>
-                                            <div class="por-txt">{{ get_all_approved_leaves }}</div>
-                                            <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Rejected Leaves</h4>
-                                            <div class="por-txt">{{ get_all_rejected_leaves }}</div>
-                                            <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Approved Salary Advances</h4>
-                                            <div class="por-txt">{{ get_all_approved_salary_advc }}</div>
-                                            <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="progress-box progress-2">
-                                            <h4 class="por-title">Rejected Salary Advances</h4>
-                                            <div class="por-txt">{{ get_all_rejected_salary_advc }}</div>
-                                            <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- /.card-body -->
-                                </div>
-                            </div> <!-- /.row -->
-                            <div class="card-body"></div>
-                        </div>
-                    </div><!-- /# column -->
+                <div class="d-md-none d-flex align-items-center">
+                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                        <i class="feather-align-right fs-20"></i>
+                    </a>
                 </div>
             </div>
-            <!-- .animated -->
         </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+           
+                <div class="col-lg-12">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Recent Orders</h5>
+                            <div class="card-header-action">
+                                <div class="card-header-btn">
+                                    <div data-bs-toggle="tooltip" title="Delete">
+                                        <a href="javascript:void(0);" class="avatar-text avatar-xs bg-danger" data-bs-toggle="remove"> </a>
+                                    </div>
+                                    <div data-bs-toggle="tooltip" title="Refresh">
+                                        <a href="javascript:void(0);" class="avatar-text avatar-xs bg-warning" data-bs-toggle="refresh"> </a>
+                                    </div>
+                                    <div data-bs-toggle="tooltip" title="Maximize/Minimize">
+                                        <a href="javascript:void(0);" class="avatar-text avatar-xs bg-success" data-bs-toggle="expand"> </a>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <a href="javascript:void(0);" class="avatar-text avatar-sm" data-bs-toggle="dropdown" data-bs-offset="25, 25">
+                                        <div data-bs-toggle="tooltip" title="Options">
+                                            <i class="feather-more-vertical"></i>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-at-sign"></i>New</a>
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-calendar"></i>Event</a>
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-bell"></i>Snoozed</a>
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-trash-2"></i>Deleted</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-settings"></i>Settings</a>
+                                        <a href="javascript:void(0);" class="dropdown-item"><i class="feather-life-buoy"></i>Tips & Tricks</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>Country</th>
+                                            <th>Date</th>
+                                            <th>Company</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                    <div class="avatar-image avatar-lg rounded">
+                                                        <img class="img-fluid" src="assets/images/gallery/4.png" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block">iPhone 14 Pro Max</a>
+                                                        <span class="fs-12 text-muted">Electronics </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Brasil</a>
+                                                <span class="fs-12 text-muted d-block">Code: PH</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">05/28/2020</a>
+                                                <span class="fs-12 text-muted d-block">Code: Paid</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Intertico</a>
+                                                <span class="fs-12 text-muted d-block">Web, UI/UX Design</span>
+                                            </td>
+                                            <td class="text-dark fw-bold">$3560</td>
+                                            <td>
+                                                <span class="badge bg-soft-primary text-primary">Approved</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-trash-2"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                    <div class="avatar-image avatar-lg rounded">
+                                                        <img class="img-fluid" src="assets/images/gallery/5.png" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block">Canon DSLR 1230</a>
+                                                        <span class="fs-12 text-muted">Electronics </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Belarus</a>
+                                                <span class="fs-12 text-muted d-block">Code: BY</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">04/18/2021</a>
+                                                <span class="fs-12 text-muted d-block">Code: Paid</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Agoda</a>
+                                                <span class="fs-12 text-muted d-block">Houses &amp; Hotels</span>
+                                            </td>
+                                            <td class="text-dark fw-bold">$4850</td>
+                                            <td>
+                                                <span class="badge bg-soft-warning text-warning">In Progress</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-trash-2"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                    <div class="avatar-image avatar-lg rounded">
+                                                        <img class="img-fluid" src="assets/images/gallery/3.png" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block">Hear Bud 202</a>
+                                                        <span class="fs-12 text-muted">Electronics </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Phillipines</a>
+                                                <span class="fs-12 text-muted d-block">Code: BH</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">07/23/2019</a>
+                                                <span class="fs-12 text-muted d-block">Code: Paid</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">RoadGee</a>
+                                                <span class="fs-12 text-muted d-block">Transportation</span>
+                                            </td>
+                                            <td class="text-dark fw-bold">$8376</td>
+                                            <td>
+                                                <span class="badge bg-soft-success text-success">Success</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-trash-2"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                    <div class="avatar-image avatar-lg rounded">
+                                                        <img class="img-fluid" src="assets/images/gallery/2.png" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block">Smart watch</a>
+                                                        <span class="fs-12 text-muted">Electronics </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Argentina</a>
+                                                <span class="fs-12 text-muted d-block">Code: BR</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">12/21/2021</a>
+                                                <span class="fs-12 text-muted d-block">Code: Paid</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">The Hill</a>
+                                                <span class="fs-12 text-muted d-block">Insurance</span>
+                                            </td>
+                                            <td class="text-dark fw-bold">$9486</td>
+                                            <td>
+                                                <span class="badge bg-soft-danger text-danger">Rejected</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-trash-2"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                    <div class="avatar-image avatar-lg rounded">
+                                                        <img class="img-fluid" src="assets/images/gallery/1.png" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block">Headphones JBL</a>
+                                                        <span class="fs-12 text-muted">Electronics </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Agoda</a>
+                                                <span class="fs-12 text-muted d-block">Code: BT</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">05/28/2020</a>
+                                                <span class="fs-12 text-muted d-block">Code: Paid</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="d-block mb-1">Phillipines</a>
+                                                <span class="fs-12 text-muted d-block">Transportation</span>
+                                            </td>
+                                            <td class="text-dark fw-bold">$8476</td>
+                                            <td>
+                                                <span class="badge bg-soft-primary text-primary">Approved</span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="avatar-text avatar-md">
+                                                        <i class="feather-trash-2"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <ul class="list-unstyled d-flex align-items-center gap-2 mb-0 pagination-common-style">
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-arrow-left"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);" class="active">1</a></li>
+                                <li><a href="javascript:void(0);">2</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-dot"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);">8</a></li>
+                                <li><a href="javascript:void(0);">9</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-arrow-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Recent Orders] end -->
+                <!-- [] start -->
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+<!--! ================================================================ !-->
+<!--! [End] Main Content !-->
 
-    <!--Local Stuff-->
-    <script>
-        jQuery(document).ready(function($) {
-            "use strict";
 
-            // Pie chart flotPie1
-            var piedata = [
-                { label: "Desktop visits", data: [[1,32]], color: '#5c6bc0'},
-                { label: "Tab visits", data: [[1,33]], color: '#ef5350'},
-                { label: "Mobile visits", data: [[1,35]], color: '#66bb6a'}
-            ];
-
-            $.plot('#flotPie1', piedata, {
-                series: {
-                    pie: {
-                        show: true,
-                        radius: 1,
-                        innerRadius: 0.65,
-                        label: {
-                            show: true,
-                            radius: 2/3,
-                            threshold: 1
-                        },
-                        stroke: {
-                            width: 0
-                        }
-                    }
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                }
-            });
-            // Pie chart flotPie1  End
-            // cellPaiChart
-            var cellPaiChart = [
-                { label: "Direct Sell", data: [[1,65]], color: '#5b83de'},
-                { label: "Channel Sell", data: [[1,35]], color: '#00bfa5'}
-            ];
-            $.plot('#cellPaiChart', cellPaiChart, {
-                series: {
-                    pie: {
-                        show: true,
-                        stroke: {
-                            width: 0
-                        }
-                    }
-                },
-                legend: {
-                    show: false
-                },grid: {
-                    hoverable: true,
-                    clickable: true
-                }
-
-            });
-            // cellPaiChart End
-            // Line Chart  #flotLine5
-            var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
-
-            var plot = $.plot($('#flotLine5'),[{
-                data: newCust,
-                label: 'New Data Flow',
-                color: '#fff'
-            }],
-            {
-                series: {
-                    lines: {
-                        show: true,
-                        lineColor: '#fff',
-                        lineWidth: 2
-                    },
-                    points: {
-                        show: true,
-                        fill: true,
-                        fillColor: "#ffffff",
-                        symbol: "circle",
-                        radius: 3
-                    },
-                    shadowSize: 0
-                },
-                points: {
-                    show: true,
-                },
-                legend: {
-                    show: false
-                },
-                grid: {
-                    show: false
-                }
-            });
-            // Line Chart  #flotLine5 End
-            // Traffic Chart using chartist
-            if ($('#traffic-chart').length) {
-                var chart = new Chartist.Line('#traffic-chart', {
-                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                  series: [
-                  [0, 18000, 35000,  25000,  22000,  0],
-                  [0, 33000, 15000,  20000,  15000,  300],
-                  [0, 15000, 28000,  15000,  30000,  5000]
-                  ]
-              }, {
-                  low: 0,
-                  showArea: true,
-                  showLine: false,
-                  showPoint: false,
-                  fullWidth: true,
-                  axisX: {
-                    showGrid: true
-                }
-            });
-
-                chart.on('draw', function(data) {
-                    if(data.type === 'line' || data.type === 'area') {
-                        data.element.animate({
-                            d: {
-                                begin: 2000 * data.index,
-                                dur: 2000,
-                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                                to: data.path.clone().stringify(),
-                                easing: Chartist.Svg.Easing.easeOutQuint
-                            }
-                        });
-                    }
-                });
-            }
-            // Traffic Chart using chartist End
-            //Traffic chart chart-js
-            if ($('#TrafficChart').length) {
-                var ctx = document.getElementById( "TrafficChart" );
-                ctx.height = 150;
-                var myChart = new Chart( ctx, {
-                    type: 'line',
-                    data: {
-                        labels: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ],
-                        datasets: [
-                        {
-                            label: "Visit",
-                            borderColor: "rgba(4, 73, 203,.09)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(4, 73, 203,.5)",
-                            data: [ 0, 2900, 5000, 3300, 6000, 3250, 0 ]
-                        },
-                        {
-                            label: "Bounce",
-                            borderColor: "rgba(245, 23, 66, 0.9)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(245, 23, 66,.5)",
-                            pointHighlightStroke: "rgba(245, 23, 66,.5)",
-                            data: [ 0, 4200, 4500, 1600, 4200, 1500, 4000 ]
-                        },
-                        {
-                            label: "Targeted",
-                            borderColor: "rgba(40, 169, 46, 0.9)",
-                            borderWidth: "1",
-                            backgroundColor: "rgba(40, 169, 46, .5)",
-                            pointHighlightStroke: "rgba(40, 169, 46,.5)",
-                            data: [1000, 5200, 3600, 2600, 4200, 5300, 0 ]
-                        }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        tooltips: {
-                            mode: 'index',
-                            intersect: false
-                        },
-                        hover: {
-                            mode: 'nearest',
-                            intersect: true
-                        }
-
-                    }
-                } );
-            }
-            //Traffic chart chart-js  End
-            // Bar Chart #flotBarChart
-            $.plot("#flotBarChart", [{
-                data: [[0, 18], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6],[16,15], [18, 9],[20,17], [22,7],[24,4], [26,9],[28,11]],
-                bars: {
-                    show: true,
-                    lineWidth: 0,
-                    fillColor: '#ffffff8a'
-                }
-            }], {
-                grid: {
-                    show: false
-                }
-            });
-            // Bar Chart #flotBarChart End
-        });
-    </script>
 {% endblock %}

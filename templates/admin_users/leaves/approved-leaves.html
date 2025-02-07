@@ -1,0 +1,176 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+<main class="nxl-container">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Leave Requests</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Leave</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex d-md-none">
+                        <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                            <i class="feather-arrow-left me-2"></i>
+                            <span>Back</span>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div class="dropdown filter-dropdown">
+                            <a class="btn btn-md btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
+                                <i class="feather-filter me-2"></i>
+                                <span>Filter</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Role" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Role">Role</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Team" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Team">Team</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Email" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Member" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Member">Member</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Recommendation" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Recommendation">Recommendation</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-plus me-3"></i>
+                                    <span>Create New</span>
+                                </a>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-filter me-3"></i>
+                                    <span>Manage Filter</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" class="btn btn-md btn-primary">
+                            <i class="feather-plus me-2"></i>
+                            <span>Add widget</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-md-none d-flex align-items-center">
+                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                        <i class="feather-align-right fs-20"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Approved Leave Requests</h5>
+                        </div>
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">User</th>
+                                            <th scope="col" class="w-25">Note</th>
+                                            <th scope="col">From</th>
+                                            <th scope="col">To</th>
+                                            <th scope="col" class="text-end">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for leave in get_all_approved_leave %}
+                                        <tr>
+                                            <td>
+                                                <div class="hstack gap-3">
+                                                   
+                                                    <div class="avatar-text bg-soft-primary text-primary">
+                                                        {% if leave.user.profile.image %}
+                                                            <img src="{{ leave.user.profile.image.url }}" alt="User Profile" class="avatar-img">
+                                                        {% else %}
+                                                        
+                                                        <img src="{% static 'profile2/user.jpg' %}" alt="User Profile" class="avatar-img">
+                                                        {% endif %}
+                                                    </div>
+                                                    
+                                                    <div>
+                                                        <a href="javascript:void(0);" class="d-block mb-1">{{ leave.user.first_name }} {{ leave.user.last_name }}</a>
+                                                        <div class="d-flex gap-3">
+                                                            <!-- Add any other details from the leave object here -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="fs-12 fw-medium mb-2">{{ leave.reason }}</div>
+                                                <div class="progress ht-3">
+                                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                                                </div>
+                                            </td>
+                                            <td>{{ leave.start_date }}</td>
+                                            <td class="fw-bold">{{ leave.end_date }}</td>
+                                            <td>
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <a class="btn btn-success">
+                                                        Approved
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <ul class="list-unstyled d-flex align-items-center gap-2 mb-0 pagination-common-style">
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-arrow-left"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);" class="active">1</a></li>
+                                <li><a href="javascript:void(0);">2</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-dot"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0);">8</a></li>
+                                <li><a href="javascript:void(0);">9</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="bi bi-arrow-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Project Tracker] end -->
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
