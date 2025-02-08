@@ -217,12 +217,13 @@ def password_reset_done(request):
 
 def reset_forget_password(request, token):
     chek_token_exists = PasswordResetToken.objects.filter(token = token).exists()
-    get_password_reset_token =  PasswordResetToken.objects.get(token = token)
 
     if not chek_token_exists:
         messages.warning(request, 'The reset link has expired. Create a New Request')
         return redirect('base:forget_password')
     
+    
+    get_password_reset_token =  PasswordResetToken.objects.get(token = token)
 
     if not get_password_reset_token.is_valid():
         messages.warning(request, 'The reset link has expired. Create a New Request')
