@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+from datetime import timedelta
 from PIL import Image
 import random
 import os
@@ -127,3 +129,12 @@ class SalaryAdvance(models.Model):
     def __str__(self):
         return f"Salary Advance for {self.user.username} ({self.amount})"
 
+
+
+class PasswordRestToken(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return now() < self.created_at + timedelta(hours=1)
