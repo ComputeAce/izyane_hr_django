@@ -121,7 +121,7 @@ class SalaryAdvance(models.Model):
         choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')],
         default='Pending'
     )
-    tenor = models.IntegerField()
+    tenor = models.IntegerField(null=True, blank=True)
     reason = models.TextField()
 
     def __str__(self):
