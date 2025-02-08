@@ -131,7 +131,7 @@ class SalaryAdvance(models.Model):
 
 
 
-class PasswordRestToken(models.Model):
+class PasswordResetToken(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=50, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)

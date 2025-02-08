@@ -5,8 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib import messages
-from base.models import Profile, Employee, Leave, SalaryAdvance
+from base.models import Profile, Employee, Leave, SalaryAdvance, PasswordRestToken
 from django.http import JsonResponse
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
+from django.urls import reverse
 
 
 
@@ -183,6 +188,11 @@ def forget_password(request):
 
     if request.method == 'POST':
         get_email = request.POST.get('email')
+        user = User.objects.get(email = get_email)
+        token = get_random_string(20)
+
+        create_token = PasswordRestToken
+
 
         return redirect('base:password_reset_done')
     return render(request, 'base/forget_password.html')
