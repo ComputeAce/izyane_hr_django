@@ -195,7 +195,7 @@ def forget_password(request):
         create_token = PasswordResetToken.objects.create(user = user, token = token)
 
         reset_url = request.build_absolute_uri(
-                reverse('password_reset_confirm', args=[token])
+                reverse('base:reset_forget_password', args=[token])
             )
         send_mail(
                 'Password Reset Request',

@@ -29,7 +29,7 @@ urlpatterns = [
     path('submit_change_password/', submit_change_password, name='submit_change_password'),
     path('forget-password/', forget_password, name='forget_password'),
     path('password-reset-done/', password_reset_done, name='password_reset_done'),
-    path('reset-forget-password-form/', reset_forget_password, name='reset_forget_password')
+    path('reset-forget-password-form/<str:token>/', reset_forget_password, name='reset_forget_password')
     
 
     
