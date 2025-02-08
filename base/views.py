@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -214,5 +215,35 @@ def password_reset_done(request):
     return render(request, 'base/password-reset-done.html')
 
 
-def reset_forget_password(request):
-    return render(request, 'base/reset_forget_password_form.html')
+def reset_forget_password(request, token):
+    chek_token_exists = PasswordResetToken.objects.filter(token = token).exists()
+    get_password_reset_token =  PasswordResetToken.objects.get(token = token)
+
+    if not chek_token_exists:
+        messages.warning(request, 'The reset link has expired. Create a New Request')
+        return redirect('base:forget_password')
+    
+
+    if not get_password_reset_token.is_valid():
+        messages.warning(request, 'The reset link has expired. Create a New Request')
+        return redirect('base:forget_password')
+    
+    if request.method == 'POST':
+        get_password = request.POST.get('password')
+        get_confrim_password = request.POST.get('confrim_password')
+
+        if get_password != get_confrim_password:
+            messages.warning(request, 'Passwords does not match. Try again')
+            return redirect('base:reset_forget_password', token=token)
+        
+        get_password_reset_token.user.password = make_password(get_password)
+        get_password_reset_token.save()
+        get_password_reset_token.delete()
+        messages.info(request, 'Your password has been reset successfully. You can login')
+        return redirect('base:login')
+    
+    context = {
+        'token': token
+    }
+        
+    return render(request, 'base/reset_forget_password_form.html', context)
