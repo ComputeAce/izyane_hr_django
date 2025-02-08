@@ -12,25 +12,27 @@ from django.http import JsonResponse
 
 @login_required(login_url='/login')
 def home(request):
-    get_all_employees = Employee.objects.count()
-    get_all_leave_requests = Leave.objects.count()
-    get_all_salary_advc_requests = SalaryAdvance.objects.count()
-    get_all_approved_leaves = Leave.objects.filter(status = 'Approved').count()
-    get_all_rejected_leaves = Leave.objects.filter(status = 'Rejected').count()
-    get_all_approved_salary_advc = SalaryAdvance.objects.filter(approval_status = 'Approved').count()
-    get_all_rejected_salary_advc = SalaryAdvance.objects.filter(approval_status =  'Rejected').count()
-    get_all_users = User.objects.all()
+    total_salary_advc = SalaryAdvance.objects.all().count()
+    total_pending_salary_advc = SalaryAdvance.objects.filter(approval_status = 'Pending').count()
 
-   
+    total_leaves = Leave.objects.all().count()
+    total_pending_leaves = Leave.objects.filter(status = 'Pending').count()
+
+
+    get_all_employees = User.objects.all().count()
+    get_all_approved_leave = Leave.objects.filter(status = 'Approved').count()
+    print("get_all_approved_leave,:", get_all_approved_leave)
+    
+
+  
+
     context = {
+        'total_salary_advc': total_salary_advc,
+        'total_pending_salary_advc': total_pending_salary_advc,
+        'total_leaves': total_leaves,
+        'total_pending_leaves': total_pending_leaves,
         'get_all_employees':  get_all_employees,
-        'get_all_leave_requests': get_all_leave_requests,
-        'get_all_salary_advc_requests': get_all_salary_advc_requests,
-        'get_all_users': get_all_users,
-        'get_all_approved_leaves': get_all_approved_leaves,
-        'get_all_rejected_leaves':  get_all_rejected_leaves,
-        'get_all_approved_salary_advc': get_all_approved_salary_advc,
-        'get_all_rejected_salary_advc':  get_all_rejected_salary_advc
+        'get_all_approved_leave':  get_all_approved_leave
     }
     return render(request, 'base/home.html', context)
 
@@ -51,18 +53,14 @@ def login(request):
 
     return render(request, "base/login.html")
     
-
 @login_required
 def user_profile(request):
     if request.method == 'POST':
-        get_username = request.POST.get('username')
         get_first_name = request.POST.get('first_name')
         get_last_name = request.POST.get('last_name')
         get_email = request.POST.get('email')
-
-        
-
-        print(get_username, get_first_name, get_last_name, get_email)
+        get_address = request.POST.get('address')
+        get_phone_number = request.POST.get('phone_number')
 
         errors = []
 
@@ -72,6 +70,11 @@ def user_profile(request):
             errors.append("Last name is required.")
         if not get_email:
             errors.append("Email is required.")
+        if not get_address:
+            errors.append("Address is required.")
+
+        if not get_phone_number:
+            errors.append("Phone number is required")
 
         try:
             if get_email:
@@ -84,21 +87,24 @@ def user_profile(request):
                 messages.error(request, error)
             return redirect('base:user_profile')
 
-        user_obj = User.objects.get(id=request.user.id)
+        user_obj = request.user
 
         if user_obj:
-            if user_obj.first_name != get_first_name:
-                user_obj.first_name = get_first_name
-            if user_obj.last_name != get_last_name:
-                user_obj.last_name = get_last_name
-            if user_obj.email != get_email:
-                user_obj.email = get_email
-                
-            user_obj.save() 
+            user_obj.first_name = get_first_name
+            user_obj.last_name = get_last_name
+            user_obj.email = get_email
+            user_obj.save()
+
+            profile_obj, created = Profile.objects.get_or_create(user=user_obj)
+            profile_obj.address = get_address
+            profile_obj.phone_number = get_phone_number
+            profile_obj.save()
 
         messages.success(request, "Profile updated successfully!")
         return redirect('base:user_profile')
+
     return render(request, 'base/profile.html')
+
 
 
 def update_profile_img(request):
@@ -112,8 +118,8 @@ def update_profile_img(request):
         messages.success(request, 'Your profile picture has been updated successfully!')
         return redirect('base:user_profile')  
     
-    messages.error(request, 'Failed to update profile picture. Please try again.')
-    return redirect('base:user_settings')
+    messages.warning(request, 'Error uploading Your Profile Picture')
+    return redirect('base:user_profile')  
 
 
 def view_employee(request):
@@ -171,3 +177,7 @@ def update_password(request):
             })
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+
+def forget_password(request):
+    return render(request, 'base/forget_password.html')

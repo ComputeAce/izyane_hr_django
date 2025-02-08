@@ -11,9 +11,9 @@
     <meta name="author" content="theme_ocean">
     <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
     <!--! BEGIN: Apps Title-->
-    <title>Duralux || Widgets Tables</title>
+    <title>Izyane || Hr</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/logo.jpeg' %}">
     <!--! END: Favicon-->
     <!--! BEGIN: Bootstrap CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
@@ -43,7 +43,7 @@
     <nav class="nxl-navigation">
         <div class="navbar-wrapper">
             <div class="m-header">
-                <a href="index.html" class="b-brand">
+                <a href="/" class="b-brand">
                     <!-- ========   change your logo hear   ============ -->
                     <img src="{% static 'assets/images/logo.jpeg' %}" alt=""  width="50" height="50" class="logo logo-lg">
                     <img src="{% static 'assets/images/logo.jpeg' %}" alt=""  width="50" height="50" class="logo logo-sm">
@@ -51,22 +51,22 @@
             </div>
             <div class="navbar-content">
                 <ul class="nxl-navbar">
+
+                    <li class="nxl-item">
+                        <a href="/" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-airplay"></i></span>
+                            <span class="nxl-mtext">Dashboards</span>
+                        </a>
+                    </li>
+
                     {% if request.user.profile.department == "HR" %}
                     
                    
                     <li class="nxl-item nxl-caption">
                         <label>HR</label>
                     </li>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="/">Home</a></li>
-                       
-                        </ul>
-                    </li>
+
+                    
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-cast"></i></span>
@@ -112,16 +112,7 @@
                     <li class="nxl-item nxl-caption">
                         <label>Employee</label>
                     </li>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="/">Home</a></li>
-                       
-                        </ul>
-                    </li>
+                
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-cast"></i></span>
