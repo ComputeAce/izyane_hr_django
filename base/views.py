@@ -180,4 +180,17 @@ def update_password(request):
 
 
 def forget_password(request):
+
+    if request.method == 'POST':
+        get_email = request.POST.get('email')
+
+        return redirect('base:password_reset_done')
     return render(request, 'base/forget_password.html')
+
+
+def password_reset_done(request):
+    return render(request, 'base/password-reset-done.html')
+
+
+def reset_forget_password(request):
+    return render(request, 'base/reset_forget_password_form.html')
