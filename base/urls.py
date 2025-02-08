@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from .views import home, login, user_profile, view_employee, logout_user, update_profile_img,  update_password, submit_change_password
+from .views import home, login, user_profile, view_employee, logout_user, update_profile_img,  update_password, submit_change_password, forget_password
 
 app_name = "base"
 urlpatterns = [
@@ -14,7 +14,8 @@ urlpatterns = [
     path('employee/', view_employee, name='view_employee'),
     path('logout_user/', logout_user, name='logout_user'),
     path('update_password/',  update_password, name=' update_password'),
-    path('submit_change_password/', submit_change_password, name='submit_change_password')
+    path('submit_change_password/', submit_change_password, name='submit_change_password'),
+    path('forget_password/', forget_password, name='forget_password')
 
     
 ]
