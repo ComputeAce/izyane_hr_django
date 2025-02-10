@@ -1,36 +1,45 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib import messages
-from base.models import Profile, Employee, Leave, SalaryAdvance
+from base.models import Profile, Employee, Leave, SalaryAdvance, PasswordResetToken
 from django.http import JsonResponse
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
+from django.urls import reverse
+from django.core.mail import send_mail
 
 
 
 @login_required(login_url='/login')
 def home(request):
-    get_all_employees = Employee.objects.count()
-    get_all_leave_requests = Leave.objects.count()
-    get_all_salary_advc_requests = SalaryAdvance.objects.count()
-    get_all_approved_leaves = Leave.objects.filter(status = 'Approved').count()
-    get_all_rejected_leaves = Leave.objects.filter(status = 'Rejected').count()
-    get_all_approved_salary_advc = SalaryAdvance.objects.filter(approval_status = 'Approved').count()
-    get_all_rejected_salary_advc = SalaryAdvance.objects.filter(approval_status =  'Rejected').count()
-    get_all_users = User.objects.all()
+    total_salary_advc = SalaryAdvance.objects.all().count()
+    total_pending_salary_advc = SalaryAdvance.objects.filter(approval_status = 'Pending').count()
 
-   
+    total_leaves = Leave.objects.all().count()
+    total_pending_leaves = Leave.objects.filter(status = 'Pending').count()
+
+
+    get_all_employees = User.objects.all().count()
+    get_all_approved_leave = Leave.objects.filter(status = 'Approved').count()
+    print("get_all_approved_leave,:", get_all_approved_leave)
+    
+
+  
+
     context = {
+        'total_salary_advc': total_salary_advc,
+        'total_pending_salary_advc': total_pending_salary_advc,
+        'total_leaves': total_leaves,
+        'total_pending_leaves': total_pending_leaves,
         'get_all_employees':  get_all_employees,
-        'get_all_leave_requests': get_all_leave_requests,
-        'get_all_salary_advc_requests': get_all_salary_advc_requests,
-        'get_all_users': get_all_users,
-        'get_all_approved_leaves': get_all_approved_leaves,
-        'get_all_rejected_leaves':  get_all_rejected_leaves,
-        'get_all_approved_salary_advc': get_all_approved_salary_advc,
-        'get_all_rejected_salary_advc':  get_all_rejected_salary_advc
+        'get_all_approved_leave':  get_all_approved_leave
     }
     return render(request, 'base/home.html', context)
 
@@ -45,24 +54,20 @@ def login(request):
                 auth_login(request, user)
                 return redirect("base:home")
             else:
-                messages.error(request, "Invalid credentials")
+                messages.warning(request, "Invalid credentials")
         except User.DoesNotExist:
-            messages.error(request, "Invalid credentials")
+            messages.warning(request, "Invalid credentials")
 
     return render(request, "base/login.html")
     
-
 @login_required
 def user_profile(request):
     if request.method == 'POST':
-        get_username = request.POST.get('username')
         get_first_name = request.POST.get('first_name')
         get_last_name = request.POST.get('last_name')
         get_email = request.POST.get('email')
-
-        
-
-        print(get_username, get_first_name, get_last_name, get_email)
+        get_address = request.POST.get('address')
+        get_phone_number = request.POST.get('phone_number')
 
         errors = []
 
@@ -72,6 +77,11 @@ def user_profile(request):
             errors.append("Last name is required.")
         if not get_email:
             errors.append("Email is required.")
+        if not get_address:
+            errors.append("Address is required.")
+
+        if not get_phone_number:
+            errors.append("Phone number is required")
 
         try:
             if get_email:
@@ -84,49 +94,25 @@ def user_profile(request):
                 messages.error(request, error)
             return redirect('base:user_profile')
 
-        user_obj = User.objects.get(id=request.user.id)
+        user_obj = request.user
 
         if user_obj:
-            if user_obj.first_name != get_first_name:
-                user_obj.first_name = get_first_name
-            if user_obj.last_name != get_last_name:
-                user_obj.last_name = get_last_name
-            if user_obj.email != get_email:
-                user_obj.email = get_email
-                
-            user_obj.save() 
+            user_obj.first_name = get_first_name
+            user_obj.last_name = get_last_name
+            user_obj.email = get_email
+            user_obj.save()
+
+            profile_obj, created = Profile.objects.get_or_create(user=user_obj)
+            profile_obj.address = get_address
+            profile_obj.phone_number = get_phone_number
+            profile_obj.save()
 
         messages.success(request, "Profile updated successfully!")
         return redirect('base:user_profile')
+
     return render(request, 'base/profile.html')
 
 
-def user_settings(request):
-    if request.method == 'POST':
-        get_current_password = request.POST.get('new_password')
-        get_new_password = request.POST.get('current_password')
-        get_confirm_password = request.POST.get('confirm_password')
-
-    
-
-        username = request.user.username
-        user =  authenticate(request, username=username, password=get_current_password)
-        if user is not None:
-            if get_new_password != get_confirm_password:
-                messages.warning(request, "Password does not match!")
-                return redirect('base:user_settings')
-            
-            user.set_password(get_new_password)
-            user.save()
-
-            messages.info(request, "Password changed successfully!")
-            logout(request)
-            return redirect('base:login')
-        else:
-            messages.warning(request, "Invalid current password!")
-            return redirect('base:user_settings')
-
-    return render(request, 'base/user_settings.html')
 
 def update_profile_img(request):
     if request.method == 'POST' and 'profile_picture' in request.FILES:
@@ -139,8 +125,8 @@ def update_profile_img(request):
         messages.success(request, 'Your profile picture has been updated successfully!')
         return redirect('base:user_profile')  
     
-    messages.error(request, 'Failed to update profile picture. Please try again.')
-    return redirect('base:user_settings')
+    messages.warning(request, 'Error uploading Your Profile Picture')
+    return redirect('base:user_profile')  
 
 
 def view_employee(request):
@@ -198,3 +184,67 @@ def update_password(request):
             })
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+
+def forget_password(request):
+
+    if request.method == 'POST':
+        get_email = request.POST.get('email')
+        user = User.objects.get(email = get_email)
+        token = get_random_string(20)
+
+        create_token = PasswordResetToken.objects.create(user = user, token = token)
+
+        reset_url = request.build_absolute_uri(
+                reverse('base:reset_forget_password', args=[token])
+            )
+        send_mail(
+                'Password Reset Request',
+                f'Click the link below to reset your password:\n{reset_url}',
+                'your_email@example.com',
+                [get_email],
+                fail_silently=False,
+            )
+
+
+        return redirect('base:password_reset_done')
+    return render(request, 'base/forget_password.html')
+
+
+def password_reset_done(request):
+    return render(request, 'base/password-reset-done.html')
+
+
+def reset_forget_password(request, token):
+    chek_token_exists = PasswordResetToken.objects.filter(token = token).exists()
+
+    if not chek_token_exists:
+        messages.warning(request, 'The reset link has expired. Create a New Request')
+        return redirect('base:forget_password')
+    
+    
+    get_password_reset_token =  PasswordResetToken.objects.get(token = token)
+
+    if not get_password_reset_token.is_valid():
+        messages.warning(request, 'The reset link has expired. Create a New Request')
+        return redirect('base:forget_password')
+    
+    if request.method == 'POST':
+        get_password = request.POST.get('password')
+        get_confrim_password = request.POST.get('confrim_password')
+
+        if get_password != get_confrim_password:
+            messages.warning(request, 'Passwords does not match. Try again')
+            return redirect('base:reset_forget_password', token=token)
+        
+        get_password_reset_token.user.password = make_password(get_password)
+        get_password_reset_token.save()
+        get_password_reset_token.delete()
+        messages.info(request, 'Your password has been reset successfully. You can login')
+        return redirect('base:login')
+    
+    context = {
+        'token': token
+    }
+        
+    return render(request, 'base/reset_forget_password_form.html', context)

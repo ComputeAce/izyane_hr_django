@@ -2,238 +2,313 @@
 {% load static %}
 
 {% block content %}
-<div class="content container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Profile</h4>
+<!--! ================================================================ !-->
+<main class="nxl-container">
+    <div class="nxl-content">
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Profile</h5>
                 </div>
-
-                {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">User Profile</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex d-md-none">
+                        <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                            <i class="feather-arrow-left me-2"></i>
+                            <span>Back</span>
+                        </a>
                     </div>
-                {% endfor %}
-                {% endif %}
-                
-                <div class="card-body">
-                    <div class="custom-tab">
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">Profile</a>
-                                <a class="nav-item nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">update profile</a>
-                                <a class="nav-item nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">settings</a>
-                            </div>
-                        </nav>
-                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
-                                <div class="row py-5">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="first-name-1" class="form-label">First Name</label>
-                                            <input type="text" id="first-name-1" value="{{ user.first_name | upper }}" class="form-control input-height" placeholder="Enter your first name" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="first-name-2" class="form-label">Last Name</label>
-                                            <input type="text" id="first-name-2" value="{{ user.last_name | upper }}" class="form-control input-height" placeholder="Enter your last name" readonly>
-                                        </div>
-                                    </div>
+                    
+                </div>
+                <div class="d-md-none d-flex align-items-center">
+                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                        <i class="feather-align-right fs-20"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="row">
+           
+                <div class="col-lg-12">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">User Profile</h5>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="text" id="email" value="{{ user.email }}" class="form-control input-height" placeholder="Enter your email" readonly>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="position" class="form-label">Position</label>
-                                            <input type="text" id="position" value="{{ user.employee.position | upper }}" class="form-control input-height" placeholder="Enter your position" readonly>
-                                        </div>
-                                    </div>
+                        </div>
+
+                        <div class="col-xxl-8 col-xl-6">
+                            <div class="card border-top-0">
+                                <div class="card-header p-0">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs flex-wrap w-100 text-center customers-nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item flex-fill border-top" role="presentation">
+                                            <a href="javascript:void(0);" class="nav-link active" data-bs-toggle="tab" data-bs-target="#overviewTab" role="tab">Overview</a>
+                                        </li>
+                                        <li class="nav-item flex-fill border-top" role="presentation">
+                                            <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#billingTab" role="tab">Update Profile</a>
+                                        </li>
+                                        <li class="nav-item flex-fill border-top" role="presentation">
+                                            <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#activityTab" role="tab">Settings</a>
+                                        </li>
+                                       
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
-                                <form action="{% url 'base:user_profile' %}" method="post">
-                                    {% csrf_token %}
-                                    <div class="row py-5">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="first-name-1" class="form-label">First Name</label>
-                                                <input type="text" id="first-name-1" name="first_name" value="{{ user.first_name | upper }}" class="form-control input-height" placeholder="Enter your first name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="first-name-2" class="form-label">Last Name</label>
-                                                <input type="text" id="first-name-2" name="last_name" value="{{ user.last_name | upper }}" class="form-control input-height" placeholder="Enter your last name">
-                                            </div>
-                                        </div>
+                                <div class="tab-content">
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="text" id="email" name="email" value="{{ user.email }}" class="form-control input-height" placeholder="Enter your email">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="tab-pane fade show active p-4" id="overviewTab" role="tabpanel">
 
-                                    <button type="submit" class="btn btn-success"> Submit </button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="custom-nav-contact" role="tabpanel" aria-labelledby="custom-nav-contact-tab">
-                                <div class="row">
-
-                                    <div class="col-md-6 my-5">
-                                        <h4 class="text-muted text-dark"> Update Your Password </h4>
-                                        <div class="card-body">
-                                            <form id="change-password-form" method="POST">
-                                                {% csrf_token %}
-                                                <div class="single-form">
-                                                    <p>Current Password</p>
-                                                    <div class="my-4" id="password-feedback" style="margin-top: 5px; font-size: 14px;"></div>
-                                                    <input type="password" id="current_password" class="form-control" name="current_password" placeholder="********" required>
+                                        
+                                            {% if messages %}
+                                            <div class="container my-3">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-8">
+                                                        {% for message in messages %}
+                                                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                                            {{ message }}
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
                                                 </div>
-                                                <div class="single-form">
-                                                    <p>New Password</p>
-                                                    <input type="password" id="new_password" class="form-control" name="new_password" placeholder="********" required>
-                                                </div>
-                                                <div class="single-form">
-                                                    <p>Confirm New Password</p>
-                                                    <input type="password" id="confirm_new_password" class="form-control" name="confirm_new_password" placeholder="********" required>
-                                                </div>
-                                                <div class="my-4" id="password-match-feedback" style="margin-top: 5px; font-size: 14px;"></div>
-                                    
-                                                <button type="button" id="submitBtn" class="btn btn-success mt-3">Update</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    
-                                    
-
-
-                                    <div class="col-md-6 my-5">
-                                        <div class="card-body">
-                                            <div class="col-md-8 text-center">
-                                                <h4 class="text-muted text-dark my-3">Update Your Profile Picture</h4>
-                                                {% if request.user.profile.image %}
-                                                    <img 
-                                                        id="profilePreview" 
-                                                        src="{{ request.user.profile.image.url }}" 
-                                                        alt="User Image" 
-                                                        class="img-fluid rounded-circle" 
-                                                        style="cursor: pointer;" 
-                                                        onclick="document.getElementById('profile_picture').click();" 
-                                                    >
+                                            </div>
+                                            {% endif %}
+                                        
+                                        <div class="profile-details mb-5">
+                                            {% if request.user.profile.image %}
+                                                        
+                                                <img src="{{ request.user.profile.image.url }}" class="my-5 text-center justify-content-center avatar-image wd-150 ht-150 border border-5 border-gray-3" alt="" class="img-fluid">
+                                                
                                                 {% else %}
-                                                    <img 
-                                                        id="profilePreview" 
-                                                        src="{% static 'profile2/user.jpg' %}" 
-                                                        alt="Default Profile" 
-                                                        class="img-fluid rounded-circle" 
-                                                        style="cursor: pointer;" 
-                                                        onclick="document.getElementById('profile_picture').click();" 
-                                                    >
-                                                {% endif %}
+                                                
+                                                    
+                                                <img src="{% static 'profile2/user.jpg' %}" alt="" class="img-fluid">
+
+                                            {% endif %}
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Full Name:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.first_name }} {{ request.user.last_name }}</div>
                                             </div>
-                                    
-                                            <!-- Form for Uploading Profile Picture -->
-                                            <div class="col-md-8">
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Email:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.email}}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Phone Number:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.profile.phone_number }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Nhima:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.profile.nhima_number}}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Social Security Number:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.profile.ssn }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">T-pin Number:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.profile.tpin }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Address:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.profile.address}}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Position:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.employee.position }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Salary:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.employee.salary_amount }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Salary Currency:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.employee.currency }}</div>
+                                            </div>
+                                            <div class="row g-0 mb-4">
+                                                <div class="col-sm-6 text-muted">Employment:</div>
+                                                <div class="col-sm-6 fw-semibold">{{ request.user.employee.employment_type }}</div>
+                                            </div>
+                                            
+
+                                        </div>
+                                       
+                                        <div class="project-section">
+                                            <div class="mb-4 d-flex align-items-center justify-content-between">
+                                                <h5 class="fw-bold mb-0">Your Identity:</h5>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">View Alls</a>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xxl-6 col-xl-12 col-md-6">
+                                                    <div class="border border-dashed border-gray-5 rounded mb-4 md-lg-0">
+                                                        <div class="p-4">
+                                                            
+                                                            <img src="{{ request.user.profile.nrc_front.url }}" width="300" heigh="300" alt="NRC Front Image">
+
+                                                           
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-xxl-6 col-xl-12 col-md-6">
+                                                    <div class="border border-dashed border-gray-5 rounded mb-4 md-lg-0">
+                                                        <div class="p-4">
+                                                            
+                                                            <img src="{{ request.user.profile.nrc_front.url }}" width="300" heigh="300" alt="NRC Front Image">
+
+                                                           
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="billingTab" role="tabpanel">
+                                        <div class="subscription-plan px-4 pt-4">   
+                                            <form action="{% url 'base:user_profile'  %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ request.user.email }}">
+                                                </div>
+                                            
+                                                <div class="mb-3">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="Enter First Name" value="{{ request.user.first_name }}">
+                                                </div>
+                                            
+                                                <div class="mb-3">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Enter Last Name" value="{{ request.user.last_name }}">
+                                                </div>
+                                            
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" value="{{ request.user.profile.address }}">
+                                                </div>
+                                            
+                                                <div class="mb-3">
+                                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="phoneNumber" name="phone_number" placeholder="Enter Phone Number" value="{{ request.user.profile.phone_number }}">
+                                                </div>
+                                            
+                                                <div class="d-flex justify-content-center my-5">
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </form>                                          
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="activityTab" role="tabpanel">
+                                       
+                                      
+
+                                        <div class="row justify-content-end mx-1 my-5">
+
+                                            <div class="col-lg-6">
+                                                <h4 class="my-2">Change Your Profile Picture</h4>
+
+                                            
+                                                {% if request.user.profile.image %}
+                                                    <img id="profile-image" src="{{ request.user.profile.image.url }}" class="avatar-image wd-150 ht-150 border border-5 border-gray-3" alt="Profile Image" style="cursor: pointer;">
+                                                {% else %}
+                                                    <img id="profile-image" src="{% static 'profile2/user.jpg' %}" class="avatar-image wd-150 ht-150 border border-5 border-gray-3" alt="Default Profile Image" style="cursor: pointer;">
+                                                {% endif %}
                                                 <form action="{% url 'base:update_profile_img' %}" method="POST" enctype="multipart/form-data">
                                                     {% csrf_token %}
-                                                    <div class="form-group">
-                                                        <label for="profile_picture" style="display: none;">Upload New Profile Picture</label>
-                                                        <input 
-                                                            type="file" 
-                                                            id="profile_picture" 
-                                                            name="profile_picture" 
-                                                            class="form-control-file" 
-                                                            accept="image/*" 
-                                                            onchange="previewImage(event)" 
-                                                            style="display: none;" 
-                                                        >
-                                                    </div>
-                                                    <!-- Centered Update Button -->
-                                                    <div class="d-flex justify-content-center">
-                                                        <button type="submit" class="btn btn-success">Update</button>
-                                                    </div>
+                                                    <input type="file" id="image-input" name="profile_picture" style="display: none;" accept="image/*">
+                                                    <button type="submit" class="btn btn-primary mt-3">Update Profile Picture</button>
                                                 </form>
                                             </div>
-                                        </div>
-                                    </div>
-                
-                                    
-                                    <script>
-                                        // Preview the selected image
-                                        function previewImage(event) {
-                                            const reader = new FileReader();
-                                            reader.onload = function () {
-                                                const output = document.getElementById('profilePreview');
-                                                output.src = reader.result;
-                                            };
-                                            reader.readAsDataURL(event.target.files[0]);
-                                        }
-                                    </script>
-                                    
-                                </div>
+                                            
 
+                                            <div class="col-lg-6">
+                                                <h4 class="my-2">Change Your Password</h4>
+                                                <div id="response-message" class="text-danger">
+                                                    <!-- Response message content will be inserted here -->
+                                                </div>
+                                                
+                                                <form id="change-password-form" method="POST" action="{% url 'base:submit_change_password' %}">
+                                                    {% csrf_token %}
+                                                    <div class="single-form">
+                                                        <p>Current Password</p>
+                                                        <div class="my-4" id="password-feedback" style="margin-top: 5px; font-size: 14px;"></div>
+                                                        <input type="password" id="current_password" class="form-control" name="current_password" placeholder="********" required>
+                                                    </div>
+                                                    <div class="single-form" id="new-password-section" style="display: none;">
+                                                        <p>New Password</p>
+                                                        <input type="password" id="new_password" class="form-control" name="new_password" placeholder="********" required>
+                                                    </div>
+                                                    <div class="single-form" id="confirm-new-password-section" style="display: none;">
+                                                        <p>Confirm New Password</p>
+                                                        <input type="password" id="confirm_new_password" class="form-control" name="confirm_new_password" placeholder="********" required>
+                                                    </div>
+                                                    <div class="my-4" id="password-match-feedback" style="margin-top: 5px; font-size: 14px;"></div>
+                                                    <button type="button" id="submitBtn" class="btn btn-primary" disabled>Update</button>
+                                                </form>
+                                            </div>
+                                            
+
+                                        </div>
+
+
+                                        
+                                       
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- [Recent Orders] end -->
+                <!-- [] start -->
             </div>
         </div>
+        <!-- [ Main Content ] end -->
     </div>
-</div>
-
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-
-    <!-- Remove duplicate JS references -->
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/popper.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/jquery-match-height.min.js' %}"></script>
-    <script src="{% static 'assets/js/main.js' %}"></script>
-    
-    <script src="{% static 'assets/js/lib/data-table/datatables.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/jszip.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/vfs_fonts.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/buttons.html5.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/buttons.print.min.js' %}"></script>
-    <script src="{% static 'assets/js/lib/data-table/buttons.colVis.min.js' %}"></script>
-    <script src="{% static 'assets/js/init/datatables-init.js' %}"></script>
-    <script src="{% static 'js/change_password.js' %}"></script>
-
+    <!-- [ Footer ] start -->
+    <footer class="footer">
+        <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+            <span>Copyright ©</span>
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+        <div class="d-flex align-items-center gap-4">
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
+            <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        </div>
+    </footer>
+    <!-- [ Footer ] end -->
+</main>
+<!--! ================================================================ !-->
+<!--! [End] Main Content !-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/change_password.js' %}"></script>
 <script>
-    function previewImage(event) {
-        const reader = new FileReader();
-        reader.onload = function () {
-            const output = document.getElementById('profilePreview');
-            output.src = reader.result || '{% static "assets/img/blank-profile.jpg" %}';
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-</script>
-{% endblock %}
+    document.getElementById('profile-image').addEventListener('click', function() {
+        document.getElementById('image-input').click();
+    });
 
-{% block extra_css %}
-<style>
-    .input-height {
-        height: 45px; /* Set a fixed height */
-        padding: 10px; /* Adjust padding for more height */
-    }
-</style>
+    document.getElementById('image-input').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-image').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 {% endblock %}
