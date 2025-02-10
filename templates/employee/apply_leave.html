@@ -23,59 +23,7 @@
                             <span>Back</span>
                         </a>
                     </div>
-                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <div class="dropdown filter-dropdown">
-                            <a class="btn btn-md btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
-                                <i class="feather-filter me-2"></i>
-                                <span>Filter</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <div class="dropdown-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Role" checked="checked">
-                                        <label class="custom-control-label c-pointer" for="Role">Role</label>
-                                    </div>
-                                </div>
-                                <div class="dropdown-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Team" checked="checked">
-                                        <label class="custom-control-label c-pointer" for="Team">Team</label>
-                                    </div>
-                                </div>
-                                <div class="dropdown-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Email" checked="checked">
-                                        <label class="custom-control-label c-pointer" for="Email">Email</label>
-                                    </div>
-                                </div>
-                                <div class="dropdown-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Member" checked="checked">
-                                        <label class="custom-control-label c-pointer" for="Member">Member</label>
-                                    </div>
-                                </div>
-                                <div class="dropdown-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Recommendation" checked="checked">
-                                        <label class="custom-control-label c-pointer" for="Recommendation">Recommendation</label>
-                                    </div>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    <i class="feather-plus me-3"></i>
-                                    <span>Create New</span>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    <i class="feather-filter me-3"></i>
-                                    <span>Manage Filter</span>
-                                </a>
-                            </div>
-                        </div>
-                        <a href="javascript:void(0);" class="btn btn-md btn-primary">
-                            <i class="feather-plus me-2"></i>
-                            <span>Add widget</span>
-                        </a>
-                    </div>
+                    
                 </div>
                 <div class="d-md-none d-flex align-items-center">
                     <a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -112,57 +60,31 @@
                                 <div class="mb-4 mx-4 my-5">
                                     <h6 class="fw-bold">Apply For Leave:</h6>
                                 </div>
-                                <div class=" d-flex">
-                                    <div class="form-group row mb-3">
-                                        <label for="EmployeeType" class="col-sm-3 col-form-label mx-3">From</label>
-                                        <div class="col-sm-9">
-
-                                            <input   name="start_date" type="date" class="form-control mx-3" id="Phone" placeholder="Phone Number">
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-3">
-                                        <label for="EmployeeType" class="col-sm-3 col-form-label mx-3">To</label>
-                                        <div class="col-sm-9">
-
-                                            <input type="date" name="end_date" class="form-control mx-3" id="Phone" placeholder="Phone Number">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
                                 
                             </div>
 
-                            <div class="col-lg-6 mx-3">
-                                
-                                <div class="form-group row mb-3">
-                                    <label for="Position" class="col-sm-3 col-form-label">Leave Type</label>
-
-                                        <input type="text" class="form-control" name="leave_type">
-                                        <!-- 
-                                        <select mame="leave_type" class="form-control" id="leave_type">
-                                            <option>Vacation</option>
-                                            <option>Bereavement</option>
-                                            <option>Paternity</option>
-                                            <option>Maternity</option>
-                                            <option>Time Off with Pay</option>
-                                            <option>Othersy</option>
-                                        </select>
-                                        -->
-                    
-                                </div>
-                                
-                            </div>
+                        
                             <div class="card-header d-flex justify-content-between border-bottom-0">
-                                
-                                <div>
-                                    <h5>Notes:</h5>
-                                    <p class="fs-12 text-muted">Notes for the Leave</p>
-                                </div>
-                                <a href="javascript:void(0);">3 Notes </a>
+
+                               
+                            
                             </div>
                             <div class="card-body py-0">
+
+                                <div class="my-2">
+                                    <label class="form-label"> From </label>
+                                    <input type="date" class="form-control" name="start_date">
+                                </div>
+
+                                <div class="my-2">
+                                    <label class="form-label"> To </label>
+                                    <input type="date" class="form-control" name="end_date">
+                                </div>
+
+                                <div class="my-2">
+                                    <label class="form-label"> Select Leave Type </label>
+                                    <input type="text" class="form-control" name="leave_type">
+                                </div>
                                 <textarea name="reason" class="form-control" rows="5" placeholder="Write note here..."></textarea>
                             </div>
                             <div class="card-footer border-top-0">

@@ -66,37 +66,65 @@ def leave_request(request):
             return redirect('employees:leave_form')
 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
-def salary_advc_request(request):
-    if request.method == 'POST':
+def agreement_view(request):
+
+    salary_advance_data = request.session.get("salaryAdvance", {})
+    amount = float(salary_advance_data.get("total", 0))  
+    tenor = int(salary_advance_data.get("tenor", 1)) 
+    reason = salary_advance_data.get("reason", "No reason provided")
+
+
+    if tenor != 0:
+        monthly_deduction = amount / tenor
+    else:
+        monthly_deduction = 0
+
+    context = {
+        'amount': amount,
+        'tenor': tenor,
+        'reason': reason,
+        'monthly_deduction': monthly_deduction
+    }
+    if request.method == "POST":
+
+        request.session['salaryAdvance'] = {
+            'total': amount,
+            'tenor': tenor,
+            'reason': reason
+        }
         user = request.user
-        amount = request.POST.get('amount')
-        reason = request.POST.get('reason')
-        repayment_start_date = request.POST.get('repayment_start_date')
-        repayment_months = request.POST.get('repayment_months')
-        
-    
-        repayment_start_date = repayment_start_date and datetime.strptime(repayment_start_date, '%Y-%m-%d').date()
-        check_obj_exists = SalaryAdvance.objects.filter(user = request.user, approval_status = 'Pending')
-        if check_obj_exists.exists():
-            messages.warning(request, 'You already have a pending leave request. Please wait for it to be processed before submitting a new request.' )
-            return redirect('employees:salary_advc_form')
-        
-        else:
-            salary_advance = SalaryAdvance(
-                user=user,
-                amount=amount,
-                reason=reason,
-                repayment_start_date=repayment_start_date,
-                repayment_months=repayment_months
-            )
-            salary_advance.save()
-            user = request.user
-            get_salary_obj = SalaryAdvance.objects.get(user = user, approval_status = 'Pending')
-            advc_id = get_salary_obj.id
+        create_record = SalaryAdvance.objects.create(user = user, amount = amount, tenor = tenor, reason = reason)
+        create_record.save()
 
-            advance_obj = NewSalaryAdvcNotification(advc_id)
-            advance_obj.send_mail_to_applicant()
-            advance_obj.send_mail_to_manager()
-            messages.success(request, "Salary Advance Request submitted successfully...")
-            return redirect('employees:salary_advc_form')
+        messages.info(request, 'Salary advance application submitted successfully.')
+        return redirect('employees:submit_form_salary_advc')
+    
+    return render(request, 'employee/agreement.html', context)
+
+
+
+
+def submit_form_salary_advc(request):
+    get_user_salary_advc = SalaryAdvance.objects.filter(user = request.user)
+
+    if request.method == "POST":
+        total = request.POST.get("total")
+        tenor = request.POST.get("tenor")
+        reason = request.POST.get("reason")
+
+        request.session["salaryAdvance"] = {
+            "total": total,
+            "tenor": tenor,
+            "reason": reason,
+        }
+        print("Saved session data:", request.session["salaryAdvance"])
+        return redirect('employees:agreement_view')  
+    
+    context = {
+        'get_user_salary_advc': get_user_salary_advc
+    }
+
+    return render(request, 'employee/salary_advc.html', context)
