@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+from datetime import timedelta
 from PIL import Image
 import random
 import os
@@ -12,6 +14,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, null=True, blank=True)
+    phone_number = models.IntegerField(blank=True, null=True)
+    nhima_number = models.IntegerField(blank=True, null= True) 
+    nrc_back = models.ImageField(upload_to='nrc', blank=True, null=True)
+    nrc_front = models.ImageField(upload_to='nrc', blank=True, null=True)
+    ssn = models.IntegerField(null=True, blank=True)
+    tpin = models.IntegerField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -112,11 +121,18 @@ class SalaryAdvance(models.Model):
         choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')],
         default='Pending'
     )
-    repayment_start_date = models.DateField(null=True, blank=True)
-    repayment_end_date = models.DateField(null=True, blank=True)
-    repayment_months = models.IntegerField(null=True, blank=True)
+    tenor = models.IntegerField(null=True, blank=True)
     reason = models.TextField()
 
     def __str__(self):
         return f"Salary Advance for {self.user.username} ({self.amount})"
 
+
+
+class PasswordResetToken(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return now() < self.created_at + timedelta(hours=1)

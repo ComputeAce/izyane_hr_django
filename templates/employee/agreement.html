@@ -1,0 +1,254 @@
+{% extends 'includes/bootstrap.html' %}
+{% load static %}
+
+{% block content %}
+<main class="nxl-container justify-content-end">
+    <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-left d-flex align-items-center">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Advance</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Apply For Salary Advance</li>
+                </ul>
+            </div>
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex d-md-none">
+                        <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                            <i class="feather-arrow-left me-2"></i>
+                            <span>Back</span>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div class="dropdown filter-dropdown">
+                            <a class="btn btn-md btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
+                                <i class="feather-filter me-2"></i>
+                                <span>Filter</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Role" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Role">Role</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Team" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Team">Team</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Email" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Member" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Member">Member</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Recommendation" checked="checked">
+                                        <label class="custom-control-label c-pointer" for="Recommendation">Recommendation</label>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-plus me-3"></i>
+                                    <span>Create New</span>
+                                </a>
+                                <a href="javascript:void(0);" class="dropdown-item">
+                                    <i class="feather-filter me-3"></i>
+                                    <span>Manage Filter</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" class="btn btn-md btn-primary">
+                            <i class="feather-plus me-2"></i>
+                            <span>Add widget</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-md-none d-flex align-items-center">
+                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                        <i class="feather-align-right fs-20"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- [ page-header ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="main-content">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card invoice-container">
+                        <div class="card-header">
+                            <h5>Salary Advance Agreement Form</h5>
+                            <div class="dropdown">
+                                <a href="javascript:void(0)" class="btn btn-light-brand dropdown-toggle" data-bs-toggle="dropdown" data-bs-offset="0,25">Invoice Templates</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item active">Default</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Simple</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Classic</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Modern</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Untimate</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Essential</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Create Template</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="dropdown-item">Delete Template</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="px-4 pt-4">
+                                <div class="d-md-flex align-items-center justify-content-between">
+                                    <div class="mb-4 mb-md-0 your-brand">
+                                        <div class="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
+                                            {% if request.user.profile.image %}
+                                                <img src="{{ request.user.profile.image.url }}" class="upload-pic img-fluid rounded h-100 w-100" alt="">
+                                            {% else %}
+
+                                                <img src=" {% static 'profile2/user.jpg' %}" class="upload-pic img-fluid rounded h-100 w-100" alt="">
+
+                                            {% endif %}
+                                           
+                                            <div class="position-absolute start-50 top-50 end-0 bottom-0 translate-middle h-100 w-100 hstack align-items-center justify-content-center c-pointer upload-button">
+                                                <i class="feather feather-camera" aria-hidden="true"></i>
+                                            </div>
+                                            <input class="file-upload" type="file" accept="image/*">
+                                        </div>
+                                        <div class="fs-12 text-muted mt-2">* Your Photo</div>
+                                    </div>
+                                    <div class="d-md-flex align-items-center justify-content-end gap-4">
+                                        <div class="form-group mb-3 mb-md-0">
+                                            <label class="form-label">First Name:</label>
+                                            <input id="issueDate" class="form-control" value="{{ request.user.first_name|default:'' }}" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name:</label>
+                                            <input id="dueDate" class="form-control" value="{{ request.user.last_name|default:'' }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="border-dashed">
+                            <div class="px-4 row justify-content-between">
+                                <div class="col-xl-3">
+                                    <div class="form-group mb-3">
+                                        <label for="InvoiceLabel" class="form-label">Employee Id</label>
+                                        <input type="text" class="form-control" value="{{ request.user.id|default:'' }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3">
+                                    <div class="form-group mb-3">
+                                        <label for="InvoiceNumber" class="form-label">Email</label>
+                                        <input type="text" class="form-control"value="{{ request.user.email|default:'' }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group mb-3">
+                                        <label for="InvoiceProduct" class="form-label">Date Joined</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            value="{{ request.user.date_joined|date:'Y-m-d'|default:'' }}" 
+                                            readonly
+                                            >
+
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="border-dashed">
+                    
+                            <hr class="border-dashed">
+                            <div class="px-4 clearfix">
+                                <div class="card stretch stretch-full">
+                                    <div class="card-body">
+                                        <div class="mb-4 d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h6 class="fw-bold">Advance Calculation:</h6>
+                                               
+                                            </div>
+                                            <div class="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Grand total invoice">
+                                                <i class="feather feather-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="tab_logic">
+                                                <thead>
+                                                    <tr class="single-item">
+                                                        <th class="text-center wd-150">Amount</th>
+                                                        <th class="text-center wd-150">Tenor</th>
+                                                        <th class="text-center wd-150">Monthly Payment</th>
+                                                        <th class="text-center wd-150">Net Pay</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id="addr1">
+                                                        <td> {{ amount }}</td>
+                                                        <td> {{ tenor }} </td>
+                                                        <td> {{ monthly_deduction }} </td>
+                                                        <td class="text-primary">{{ request.user.employee.salary_amount}}</td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                               
+                            </div>
+                            <hr class="border-dashed">
+                        
+                            
+
+                            <div class="d-flex justify-content-start gap-2 mt-3 my-3 mx-5">
+                                <button id="delete_row" class="btn bg-soft-danger text-danger">CANCLE</button>
+
+                                <form action="#" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" class="form-control" name="total" id="{{ amount }}">
+                                    <input type="hidden" class="form-control" name="tenor" id="{{ tenor }}">
+                                    <input type="hidden" class="form-control" name="reason" id="{{ reason }}">
+                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                </form>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
