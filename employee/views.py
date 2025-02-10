@@ -105,24 +105,37 @@ def agreement_view(request):
     return render(request, 'employee/agreement.html', context)
 
 
-
-
 def submit_form_salary_advc(request):
-    get_user_salary_advc = SalaryAdvance.objects.filter(user = request.user)
+    get_user_salary_advc = SalaryAdvance.objects.filter(user=request.user)
 
     if request.method == "POST":
         total = request.POST.get("total")
         tenor = request.POST.get("tenor")
         reason = request.POST.get("reason")
 
-        request.session["salaryAdvance"] = {
-            "total": total,
-            "tenor": tenor,
-            "reason": reason,
-        }
-        print("Saved session data:", request.session["salaryAdvance"])
-        return redirect('employees:agreement_view')  
+        user = request.user
+
+        try:
+            check_pending_requests = SalaryAdvance.objects.filter(user=user, approval_status='Pending')
+            if check_pending_requests.exists():
+                messages.info(request, "You already have a pending application. Please wait for it to be processed.")
+                return redirect('employees:submit_form_salary_advc')
+            
+            request.session["salaryAdvance"] = {
+                "total": total,
+                "tenor": tenor,
+                "reason": reason,
+            }
+            print("Saved session data:", request.session["salaryAdvance"])
+            return redirect('employees:agreement_view')  
+
+        except Exception as e:
     
+            print(f"Error processing salary advance request: {e}")
+            messages.warning(request, "Invalid request, please try again.")
+            return redirect('employees:submit_form_salary_advc')
+            
+
     context = {
         'get_user_salary_advc': get_user_salary_advc
     }
