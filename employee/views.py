@@ -66,9 +66,6 @@ def leave_request(request):
             return redirect('employees:leave_form')
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-
 def agreement_view(request):
 
     salary_advance_data = request.session.get("salaryAdvance", {})
@@ -99,12 +96,18 @@ def agreement_view(request):
         create_record = SalaryAdvance.objects.create(user = user, amount = amount, tenor = tenor, reason = reason)
         create_record.save()
 
+        get_salary_adv_of_user = SalaryAdvance.objects.get(user = request.user, approval_status = 'Pending')
+
+        salary_advc_obj = NewSalaryAdvcNotification(get_salary_adv_of_user.id)
+        salary_advc_obj.send_mail_to_applicant()
+        salary_advc_obj.send_mail_to_manager()
         messages.info(request, 'Salary advance application submitted successfully.')
         return redirect('employees:submit_form_salary_advc')
+
     
     return render(request, 'employee/agreement.html', context)
 
-
+#zawadi15
 def submit_form_salary_advc(request):
     get_user_salary_advc = SalaryAdvance.objects.filter(user=request.user)
 
