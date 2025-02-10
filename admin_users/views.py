@@ -178,9 +178,9 @@ def vett_leave_request(request, id):
         leave_obj.send_mail_application()
     else:
         messages.warning(request, "Invalid action",)
-        return redirect('admin_users:leave_request')
+        return redirect('admin_users:pending_salary_adv')
     
-    return redirect('admin_users:leave_request')
+    return redirect('admin_users:pending_salary_adv')
 
 
 def all_employee(request):

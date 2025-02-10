@@ -139,15 +139,19 @@
                                             <td class="fw-bold">{{ leave.end_date }}</td>
                                             <td class="fw-bold">{{ leave.leave_type }}</td>
                                             <td>
-                                                <div class="hstack gap-2 justify-content-end">
-                                                    <a class="btn btn-success">
-                                                        Approve
-                                                    </a>
-
-                                                    <a class="btn btn-danger">
-                                                        Reject
-                                                    </a>
-                                                </div>
+                                                <form action="{% url 'admin_users:vett_leave_request' leave.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                  
+                                                        <button type="submit" name="action" value="Approved" class="btn btn-success">
+                                                            Approve
+                                                        </button>
+                                                        <button type="submit" name="action" value="Rejected" class="btn btn-danger">
+                                                            Reject
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                                
                                             </td>
                                         </tr>
                                         {% endfor %}
